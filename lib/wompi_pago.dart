@@ -13,7 +13,7 @@ import 'modelos/tarjeta_tokenizada.dart';
 
 enum Ambiente { dev, prod }
 
-class PagoWompi {
+class WompiPago {
   late final String llavePublica;
   late final Ambiente ambiente;
   late final String prefijoComercio;
@@ -22,7 +22,7 @@ class PagoWompi {
   static String sandBoxUrl = "https://sandbox.wompi.co";
   static String productionUrl = "https://production.wompi.co";
 
-  PagoWompi(
+  WompiPago(
       {required this.llavePublica,
       required this.ambiente,
       required this.prefijoComercio,
