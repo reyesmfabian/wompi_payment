@@ -3,13 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'modelos/aceptacion.dart';
-import 'modelos/consulta_nequi.dart';
-import 'modelos/consulta_tarjeta.dart';
-import 'modelos/repuesta_pago_nequi.dart';
-import 'modelos/respuesta_pago_tarjeta.dart';
-import 'modelos/tarjeta_tokenizada.dart';
+import 'package:wompi_pago/modelos/aceptacion.dart';
+import 'package:wompi_pago/modelos/consulta_nequi.dart';
+import 'package:wompi_pago/modelos/consulta_tarjeta.dart';
+import 'package:wompi_pago/modelos/repuesta_pago_nequi.dart';
+import 'package:wompi_pago/modelos/respuesta_pago_tarjeta.dart';
+import 'package:wompi_pago/modelos/tarjeta_tokenizada.dart';
 
 enum Ambiente { dev, prod }
 
