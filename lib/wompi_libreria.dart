@@ -28,7 +28,7 @@ class PagoWompi {
       required this.prefijoComercio,
       this.moneda = 'COP'});
 
-  obtenerAceptacion() async {
+  Future<ModeloAceptacion> obtenerAceptacion() async {
     String url = ambiente == Ambiente.dev ? sandBoxUrl : productionUrl;
     String urlCompleta = "$url/v1/merchants/$llavePublica";
     Map<String, String> headers = {"Content-type": "application/json"};
@@ -60,7 +60,7 @@ class PagoWompi {
   /// **[telefono]** es el número de teléfono del cliente
   ///
   /// **[tokenAceptacion]** es el token de aceptación generado por WOMPI
-  pagarConTarjeta({
+  Future<RespuestaPagoTarjeta> pagarConTarjeta({
     required String referencia,
     required String numeroTarjeta,
     required String cvc,
@@ -118,7 +118,8 @@ class PagoWompi {
     return respuestaPago;
   }
 
-  consultarTransaccionTarjeta({required String idTransaccion}) async {
+  Future<ConsultaTarjeta> consultarTransaccionTarjeta(
+      {required String idTransaccion}) async {
     String url = ambiente == Ambiente.dev ? sandBoxUrl : productionUrl;
     String urlCompleta = "$url/v1/transactions/$idTransaccion";
     Map<String, String> headers = {
@@ -134,7 +135,7 @@ class PagoWompi {
     return respuestaConsulta;
   }
 
-  pagarConNequi({
+  Future<RespuestaPagoNequi> pagarConNequi({
     required String referencia,
     required int valor,
     required String email,
@@ -169,7 +170,8 @@ class PagoWompi {
     return respuestaPago;
   }
 
-  consultarTransaccionNequi({required String idTransaccion}) async {
+  Future<ConsultaNequi> consultarTransaccionNequi(
+      {required String idTransaccion}) async {
     String url = ambiente == Ambiente.dev ? sandBoxUrl : productionUrl;
     String urlCompleta = "$url/v1/transactions/$idTransaccion";
     Map<String, String> headers = {
