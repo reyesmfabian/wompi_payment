@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final consultaNequi = consultaNequiFromJson(jsonString);
+//     final consultaTarjeta = consultaTarjetaFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-ConsultaNequi consultaNequiFromJson(String str) =>
-    ConsultaNequi.fromJson(json.decode(str));
+ConsultaTarjeta consultaTarjetaFromJson(String str) =>
+    ConsultaTarjeta.fromJson(json.decode(str));
 
-String consultaNequiToJson(ConsultaNequi data) => json.encode(data.toJson());
+String consultaTarjetaToJson(ConsultaTarjeta data) =>
+    json.encode(data.toJson());
 
-class ConsultaNequi {
-  ConsultaNequi({
+class ConsultaTarjeta {
+  ConsultaTarjeta({
     required this.data,
     required this.meta,
   });
@@ -19,7 +19,8 @@ class ConsultaNequi {
   Data data;
   Meta meta;
 
-  factory ConsultaNequi.fromJson(Map<String, dynamic> json) => ConsultaNequi(
+  factory ConsultaTarjeta.fromJson(Map<String, dynamic> json) =>
+      ConsultaTarjeta(
         data: Data.fromJson(json["data"]),
         meta: Meta.fromJson(json["meta"]),
       );
@@ -106,7 +107,7 @@ class Merchant {
   String legalName;
   String contactName;
   String phoneNumber;
-  String logoUrl;
+  dynamic logoUrl;
   String legalIdType;
   String email;
   String legalId;
@@ -138,52 +139,55 @@ class PaymentMethod {
   PaymentMethod({
     required this.type,
     required this.extra,
-    required this.phoneNumber,
+    required this.installments,
   });
 
   String type;
   Extra extra;
-  String phoneNumber;
+  int installments;
 
   factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
-        type: json["type"] ?? "",
-        extra: Extra.fromJson(json["extra"] ??
-            Map<String, dynamic>.from({
-              "transaction_id": "",
-              "external_identifier": "",
-              "nequi_transaction_id": ""
-            })),
-        phoneNumber: json["phone_number"],
+        type: json["type"],
+        extra: Extra.fromJson(json["extra"]),
+        installments: json["installments"],
       );
 
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra.toJson(),
-        "phone_number": phoneNumber,
+        "installments": installments,
       };
 }
 
 class Extra {
   Extra({
-    required this.transactionId,
+    required this.name,
+    required this.brand,
+    required this.lastFour,
     required this.externalIdentifier,
-    required this.nequiTransactionId,
+    required this.processorResponseCode,
   });
 
-  String transactionId;
+  String name;
+  String brand;
+  String lastFour;
   String externalIdentifier;
-  String nequiTransactionId;
+  String processorResponseCode;
 
   factory Extra.fromJson(Map<String, dynamic> json) => Extra(
-        transactionId: json["transaction_id"],
-        externalIdentifier: json["external_identifier"],
-        nequiTransactionId: json["nequi_transaction_id"],
+        name: json["name"],
+        brand: json["brand"],
+        lastFour: json["last_four"],
+        externalIdentifier: json["external_identifier"] ?? "",
+        processorResponseCode: json["processor_response_code"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
-        "transaction_id": transactionId,
+        "name": name,
+        "brand": brand,
+        "last_four": lastFour,
         "external_identifier": externalIdentifier,
-        "nequi_transaction_id": nequiTransactionId,
+        "processor_response_code": processorResponseCode,
       };
 }
 

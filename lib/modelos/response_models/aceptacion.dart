@@ -2,7 +2,6 @@
 //
 //     final modeloAceptacion = modeloAceptacionFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ModeloAceptacion modeloAceptacionFromJson(String str) =>
