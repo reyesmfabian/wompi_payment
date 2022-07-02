@@ -45,7 +45,7 @@ class CreditCardPay extends SelectedPaymentMethod {
   /// **[tokenAceptacion]** es el token de aceptación generado por WOMPI
   Future<void> pay() async {
     print(paymentRequest.toJson());
-    print(wompiClient);
+    print(wompiClient.ambiente);
     print(creditCard.toJson());
     // String url = wompiClient.url;
     // String urlCompleta = "$url/v1/tokens/cards";
