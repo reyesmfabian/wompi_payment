@@ -1,14 +1,11 @@
-// To parse this JSON data, do
-//
-//     final creditCard = creditCardFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 CreditCard creditCardFromJson(String str) =>
     CreditCard.fromJson(json.decode(str));
 
 String creditCardToJson(CreditCard data) => json.encode(data.toJson());
+
+/// **_CREAR NUEVA TARJETA DE CRÉDITO_**
 
 class CreditCard {
   CreditCard({

@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final tarjetaTokenizada = tarjetaTokenizadaFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 TarjetaTokenizada tarjetaTokenizadaFromJson(String str) =>

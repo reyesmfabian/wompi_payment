@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final respuestaPagoTarjeta = respuestaPagoTarjetaFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 RespuestaPagoTarjeta respuestaPagoTarjetaFromJson(String str) =>
