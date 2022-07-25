@@ -13,12 +13,12 @@ class TarjetaTokenizada {
   });
 
   String status;
-  Data data;
+  TarjetaTokenizadaData data;
 
   factory TarjetaTokenizada.fromJson(Map<String, dynamic> json) =>
       TarjetaTokenizada(
         status: json["status"],
-        data: Data.fromJson(json["data"]),
+        data: TarjetaTokenizadaData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +27,8 @@ class TarjetaTokenizada {
       };
 }
 
-class Data {
-  Data({
+class TarjetaTokenizadaData {
+  TarjetaTokenizadaData({
     required this.id,
     required this.createdAt,
     required this.brand,
@@ -52,7 +52,8 @@ class Data {
   String cardHolder;
   DateTime expiresAt;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory TarjetaTokenizadaData.fromJson(Map<String, dynamic> json) =>
+      TarjetaTokenizadaData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         brand: json["brand"],

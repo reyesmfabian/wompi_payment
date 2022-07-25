@@ -12,13 +12,13 @@ class RespuestaPagoTarjeta {
     required this.meta,
   });
 
-  Data data;
-  Meta meta;
+  RespuestaTarjetaData data;
+  RespuestaTarjetaMeta meta;
 
   factory RespuestaPagoTarjeta.fromJson(Map<String, dynamic> json) =>
       RespuestaPagoTarjeta(
-        data: Data.fromJson(json["data"]),
-        meta: Meta.fromJson(json["meta"]),
+        data: RespuestaTarjetaData.fromJson(json["data"]),
+        meta: RespuestaTarjetaMeta.fromJson(json["meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +27,8 @@ class RespuestaPagoTarjeta {
       };
 }
 
-class Data {
-  Data({
+class RespuestaTarjetaData {
+  RespuestaTarjetaData({
     required this.id,
     required this.createdAt,
     required this.finalizedAt,
@@ -58,7 +58,7 @@ class Data {
   String customerEmail;
   String currency;
   String paymentMethodType;
-  PaymentMethod paymentMethod;
+  RespuestaTarjetaPaymentMethod paymentMethod;
   String status;
   dynamic statusMessage;
   dynamic billingData;
@@ -66,11 +66,12 @@ class Data {
   dynamic redirectUrl;
   dynamic paymentSourceId;
   dynamic paymentLinkId;
-  CustomerData customerData;
+  RespuestaTarjetaCustomerData customerData;
   dynamic billId;
   List<dynamic> taxes;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory RespuestaTarjetaData.fromJson(Map<String, dynamic> json) =>
+      RespuestaTarjetaData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         finalizedAt: json["finalized_at"],
@@ -79,7 +80,8 @@ class Data {
         customerEmail: json["customer_email"],
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
-        paymentMethod: PaymentMethod.fromJson(json["payment_method"]),
+        paymentMethod:
+            RespuestaTarjetaPaymentMethod.fromJson(json["payment_method"]),
         status: json["status"],
         statusMessage: json["status_message"],
         billingData: json["billing_data"],
@@ -87,7 +89,8 @@ class Data {
         redirectUrl: json["redirect_url"],
         paymentSourceId: json["payment_source_id"],
         paymentLinkId: json["payment_link_id"],
-        customerData: CustomerData.fromJson(json["customer_data"]),
+        customerData:
+            RespuestaTarjetaCustomerData.fromJson(json["customer_data"]),
         billId: json["bill_id"],
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
       );
@@ -115,8 +118,8 @@ class Data {
       };
 }
 
-class CustomerData {
-  CustomerData({
+class RespuestaTarjetaCustomerData {
+  RespuestaTarjetaCustomerData({
     required this.fullName,
     required this.phoneNumber,
   });
@@ -124,7 +127,8 @@ class CustomerData {
   String fullName;
   String phoneNumber;
 
-  factory CustomerData.fromJson(Map<String, dynamic> json) => CustomerData(
+  factory RespuestaTarjetaCustomerData.fromJson(Map<String, dynamic> json) =>
+      RespuestaTarjetaCustomerData(
         fullName: json["full_name"],
         phoneNumber: json["phone_number"],
       );
@@ -135,20 +139,21 @@ class CustomerData {
       };
 }
 
-class PaymentMethod {
-  PaymentMethod({
+class RespuestaTarjetaPaymentMethod {
+  RespuestaTarjetaPaymentMethod({
     required this.type,
     required this.extra,
     required this.installments,
   });
 
   String type;
-  Extra extra;
+  RespuestaTarjetaExtra extra;
   int installments;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
+  factory RespuestaTarjetaPaymentMethod.fromJson(Map<String, dynamic> json) =>
+      RespuestaTarjetaPaymentMethod(
         type: json["type"],
-        extra: Extra.fromJson(json["extra"]),
+        extra: RespuestaTarjetaExtra.fromJson(json["extra"]),
         installments: json["installments"],
       );
 
@@ -159,8 +164,8 @@ class PaymentMethod {
       };
 }
 
-class Extra {
-  Extra({
+class RespuestaTarjetaExtra {
+  RespuestaTarjetaExtra({
     required this.bin,
     required this.name,
     required this.brand,
@@ -178,7 +183,8 @@ class Extra {
   String lastFour;
   String cardHolder;
 
-  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+  factory RespuestaTarjetaExtra.fromJson(Map<String, dynamic> json) =>
+      RespuestaTarjetaExtra(
         bin: json["bin"],
         name: json["name"],
         brand: json["brand"],
@@ -199,14 +205,15 @@ class Extra {
       };
 }
 
-class Meta {
-  Meta({
+class RespuestaTarjetaMeta {
+  RespuestaTarjetaMeta({
     required this.traceId,
   });
 
   String traceId;
 
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+  factory RespuestaTarjetaMeta.fromJson(Map<String, dynamic> json) =>
+      RespuestaTarjetaMeta(
         traceId: json["trace_id"],
       );
 

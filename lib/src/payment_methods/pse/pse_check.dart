@@ -3,12 +3,12 @@ import 'dart:convert';
 
 import 'package:wompi_pago/src/src_exports.dart';
 
-class NequiCheck extends PaymentChecker {
-  NequiCheck({required String transactionId, required WompiClient wompiClient})
+class PseCheck extends PaymentChecker {
+  PseCheck({required String transactionId, required WompiClient wompiClient})
       : super(transactionId, wompiClient);
 
   @override
-  Future<ConsultaNequi> checkPayment() async {
+  Future<RespuestaPse> checkPayment() async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/transactions/$transactionId";
 
@@ -19,8 +19,7 @@ class NequiCheck extends PaymentChecker {
 
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    final respuestaConsulta =
-        ConsultaNequi.fromJson(json.decode(response.body));
+    final respuestaConsulta = RespuestaPse.fromJson(json.decode(response.body));
     if (respuestaConsulta.data.status == 'PENDING') {
       Timer(const Duration(seconds: 2), () {
         checkPayment();

@@ -7,6 +7,7 @@ String creditCardToJson(CreditCard data) => json.encode(data.toJson());
 
 /// **_CREAR NUEVA TARJETA DE CRÉDITO_**
 
+/// Creación de una nueva tarjeta de crédito
 class CreditCard {
   CreditCard({
     required this.cardNumber,

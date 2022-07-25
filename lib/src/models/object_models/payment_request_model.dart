@@ -13,6 +13,7 @@ class PaymentRequestData {
     required this.name,
     required this.acceptanceToken,
     required this.reference,
+    required this.document,
   });
 
   String email;
@@ -20,12 +21,14 @@ class PaymentRequestData {
   String name;
   String acceptanceToken;
   String reference;
+  String document;
 
   factory PaymentRequestData.fromJson(Map<String, dynamic> json) =>
       PaymentRequestData(
         email: json["email"],
         phone: json["phone"],
         name: json["name"],
+        document: json["document"],
         acceptanceToken: json["acceptance_token"],
         reference: json["reference"],
       );
@@ -34,6 +37,7 @@ class PaymentRequestData {
         "email": email,
         "phone": phone,
         "name": name,
+        "document": document,
         "acceptance_token": acceptanceToken,
         "reference": reference,
       };

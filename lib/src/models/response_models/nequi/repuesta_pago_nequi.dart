@@ -12,13 +12,13 @@ class RespuestaPagoNequi {
     required this.meta,
   });
 
-  Data data;
-  Meta meta;
+  RespuestaNequiData data;
+  RespuestaNequiMeta meta;
 
   factory RespuestaPagoNequi.fromJson(Map<String, dynamic> json) =>
       RespuestaPagoNequi(
-        data: Data.fromJson(json["data"]),
-        meta: Meta.fromJson(json["meta"]),
+        data: RespuestaNequiData.fromJson(json["data"]),
+        meta: RespuestaNequiMeta.fromJson(json["meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +27,8 @@ class RespuestaPagoNequi {
       };
 }
 
-class Data {
-  Data({
+class RespuestaNequiData {
+  RespuestaNequiData({
     required this.id,
     required this.createdAt,
     required this.finalizedAt,
@@ -58,7 +58,7 @@ class Data {
   String customerEmail;
   String currency;
   String paymentMethodType;
-  PaymentMethod paymentMethod;
+  RespuestaNequiPaymentMethod paymentMethod;
   String status;
   dynamic statusMessage;
   dynamic billingData;
@@ -66,11 +66,12 @@ class Data {
   dynamic redirectUrl;
   dynamic paymentSourceId;
   dynamic paymentLinkId;
-  CustomerData customerData;
+  RespuestaNequiCustomerData customerData;
   dynamic billId;
   List<dynamic> taxes;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory RespuestaNequiData.fromJson(Map<String, dynamic> json) =>
+      RespuestaNequiData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         finalizedAt: json["finalized_at"],
@@ -79,7 +80,8 @@ class Data {
         customerEmail: json["customer_email"],
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
-        paymentMethod: PaymentMethod.fromJson(json["payment_method"]),
+        paymentMethod:
+            RespuestaNequiPaymentMethod.fromJson(json["payment_method"]),
         status: json["status"],
         statusMessage: json["status_message"],
         billingData: json["billing_data"],
@@ -87,7 +89,8 @@ class Data {
         redirectUrl: json["redirect_url"],
         paymentSourceId: json["payment_source_id"],
         paymentLinkId: json["payment_link_id"],
-        customerData: CustomerData.fromJson(json["customer_data"]),
+        customerData:
+            RespuestaNequiCustomerData.fromJson(json["customer_data"]),
         billId: json["bill_id"],
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
       );
@@ -115,8 +118,8 @@ class Data {
       };
 }
 
-class CustomerData {
-  CustomerData({
+class RespuestaNequiCustomerData {
+  RespuestaNequiCustomerData({
     required this.fullName,
     required this.phoneNumber,
   });
@@ -124,7 +127,8 @@ class CustomerData {
   String fullName;
   String phoneNumber;
 
-  factory CustomerData.fromJson(Map<String, dynamic> json) => CustomerData(
+  factory RespuestaNequiCustomerData.fromJson(Map<String, dynamic> json) =>
+      RespuestaNequiCustomerData(
         fullName: json["full_name"],
         phoneNumber: json["phone_number"],
       );
@@ -135,8 +139,8 @@ class CustomerData {
       };
 }
 
-class PaymentMethod {
-  PaymentMethod({
+class RespuestaNequiPaymentMethod {
+  RespuestaNequiPaymentMethod({
     required this.type,
     required this.phoneNumber,
   });
@@ -144,7 +148,8 @@ class PaymentMethod {
   String type;
   String phoneNumber;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
+  factory RespuestaNequiPaymentMethod.fromJson(Map<String, dynamic> json) =>
+      RespuestaNequiPaymentMethod(
         type: json["type"],
         phoneNumber: json["phone_number"],
       );
@@ -155,14 +160,15 @@ class PaymentMethod {
       };
 }
 
-class Meta {
-  Meta({
+class RespuestaNequiMeta {
+  RespuestaNequiMeta({
     required this.traceId,
   });
 
   String traceId;
 
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+  factory RespuestaNequiMeta.fromJson(Map<String, dynamic> json) =>
+      RespuestaNequiMeta(
         traceId: json["trace_id"],
       );
 

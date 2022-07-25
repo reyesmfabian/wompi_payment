@@ -1,26 +1,28 @@
 // To parse this JSON data, do
 //
-//     final consultaNequi = consultaNequiFromJson(jsonString);
+//     final consultaTarjeta = consultaTarjetaFromJson(jsonString);
 
 import 'dart:convert';
 
-ConsultaNequi consultaNequiFromJson(String str) =>
-    ConsultaNequi.fromJson(json.decode(str));
+ConsultaTarjeta consultaTarjetaFromJson(String str) =>
+    ConsultaTarjeta.fromJson(json.decode(str));
 
-String consultaNequiToJson(ConsultaNequi data) => json.encode(data.toJson());
+String consultaTarjetaToJson(ConsultaTarjeta data) =>
+    json.encode(data.toJson());
 
-class ConsultaNequi {
-  ConsultaNequi({
+class ConsultaTarjeta {
+  ConsultaTarjeta({
     required this.data,
     required this.meta,
   });
 
-  NequiData data;
-  Meta meta;
+  CardData data;
+  CardMeta meta;
 
-  factory ConsultaNequi.fromJson(Map<String, dynamic> json) => ConsultaNequi(
-        data: NequiData.fromJson(json["data"]),
-        meta: Meta.fromJson(json["meta"]),
+  factory ConsultaTarjeta.fromJson(Map<String, dynamic> json) =>
+      ConsultaTarjeta(
+        data: CardData.fromJson(json["data"]),
+        meta: CardMeta.fromJson(json["meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,8 +31,8 @@ class ConsultaNequi {
       };
 }
 
-class NequiData {
-  NequiData({
+class CardData {
+  CardData({
     required this.id,
     required this.createdAt,
     required this.amountInCents,
@@ -51,25 +53,25 @@ class NequiData {
   String reference;
   String currency;
   String paymentMethodType;
-  PaymentMethod paymentMethod;
+  CardPaymentMethod paymentMethod;
   dynamic redirectUrl;
   String status;
   dynamic statusMessage;
-  NequiMerchant merchant;
+  CardMerchant merchant;
   List<dynamic> taxes;
 
-  factory NequiData.fromJson(Map<String, dynamic> json) => NequiData(
+  factory CardData.fromJson(Map<String, dynamic> json) => CardData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
-        paymentMethod: PaymentMethod.fromJson(json["payment_method"]),
+        paymentMethod: CardPaymentMethod.fromJson(json["payment_method"]),
         redirectUrl: json["redirect_url"],
         status: json["status"],
         statusMessage: json["status_message"],
-        merchant: NequiMerchant.fromJson(json["merchant"]),
+        merchant: CardMerchant.fromJson(json["merchant"]),
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
       );
 
@@ -89,8 +91,8 @@ class NequiData {
       };
 }
 
-class NequiMerchant {
-  NequiMerchant({
+class CardMerchant {
+  CardMerchant({
     required this.name,
     required this.legalName,
     required this.contactName,
@@ -105,12 +107,12 @@ class NequiMerchant {
   String legalName;
   String contactName;
   String phoneNumber;
-  String logoUrl;
+  dynamic logoUrl;
   String legalIdType;
   String email;
   String legalId;
 
-  factory NequiMerchant.fromJson(Map<String, dynamic> json) => NequiMerchant(
+  factory CardMerchant.fromJson(Map<String, dynamic> json) => CardMerchant(
         name: json["name"],
         legalName: json["legal_name"],
         contactName: json["contact_name"],
@@ -133,67 +135,71 @@ class NequiMerchant {
       };
 }
 
-class PaymentMethod {
-  PaymentMethod({
+class CardPaymentMethod {
+  CardPaymentMethod({
     required this.type,
     required this.extra,
-    required this.phoneNumber,
+    required this.installments,
   });
 
   String type;
-  Extra extra;
-  String phoneNumber;
+  CardExtra extra;
+  int installments;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
-        type: json["type"] ?? "",
-        extra: Extra.fromJson(json["extra"] ??
-            Map<String, dynamic>.from({
-              "transaction_id": "",
-              "external_identifier": "",
-              "nequi_transaction_id": ""
-            })),
-        phoneNumber: json["phone_number"],
+  factory CardPaymentMethod.fromJson(Map<String, dynamic> json) =>
+      CardPaymentMethod(
+        type: json["type"],
+        extra: CardExtra.fromJson(json["extra"]),
+        installments: json["installments"],
       );
 
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra.toJson(),
-        "phone_number": phoneNumber,
+        "installments": installments,
       };
 }
 
-class Extra {
-  Extra({
-    required this.transactionId,
+class CardExtra {
+  CardExtra({
+    required this.name,
+    required this.brand,
+    required this.lastFour,
     required this.externalIdentifier,
-    required this.nequiTransactionId,
+    required this.processorResponseCode,
   });
 
-  String transactionId;
+  String name;
+  String brand;
+  String lastFour;
   String externalIdentifier;
-  String nequiTransactionId;
+  String processorResponseCode;
 
-  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
-        transactionId: json["transaction_id"],
-        externalIdentifier: json["external_identifier"],
-        nequiTransactionId: json["nequi_transaction_id"],
+  factory CardExtra.fromJson(Map<String, dynamic> json) => CardExtra(
+        name: json["name"],
+        brand: json["brand"],
+        lastFour: json["last_four"],
+        externalIdentifier: json["external_identifier"] ?? "",
+        processorResponseCode: json["processor_response_code"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
-        "transaction_id": transactionId,
+        "name": name,
+        "brand": brand,
+        "last_four": lastFour,
         "external_identifier": externalIdentifier,
-        "nequi_transaction_id": nequiTransactionId,
+        "processor_response_code": processorResponseCode,
       };
 }
 
-class Meta {
-  Meta({
+class CardMeta {
+  CardMeta({
     required this.traceId,
   });
 
   String traceId;
 
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+  factory CardMeta.fromJson(Map<String, dynamic> json) => CardMeta(
         traceId: json["trace_id"],
       );
 
