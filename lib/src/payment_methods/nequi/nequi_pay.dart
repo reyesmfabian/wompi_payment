@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:wompi_pago/src/src_exports.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class NequiPay extends PaymentProcessor {
   final int amount;
@@ -17,7 +17,7 @@ class NequiPay extends PaymentProcessor {
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer' + wompiClient.llavePublica
+      'Authorization': 'Bearer ' + wompiClient.llavePublica
     };
 
     Map<String, dynamic> body = {
@@ -39,9 +39,12 @@ class NequiPay extends PaymentProcessor {
 
     final response = await HttpClientAdapter.post(
         url: urlCompleta, headers: headers, body: body);
-
-    final respuestaPago =
-        RespuestaPagoNequi.fromJson(json.decode(response.body));
-    return respuestaPago;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final respuestaPago =
+          RespuestaPagoNequi.fromJson(json.decode(response.body));
+      return respuestaPago;
+    } else {
+      throw ArgumentError(response.body);
+    }
   }
 }

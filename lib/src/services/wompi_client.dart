@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:wompi_pago/src/models/response_models/aceptacion.dart';
-import 'package:wompi_pago/src/payment_methods/payment_checker.dart';
-import 'package:wompi_pago/src/payment_methods/payment_processor.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 // ignore: constant_identifier_names
 enum Ambiente { TEST, PRODUCTION }
@@ -37,10 +35,10 @@ class WompiClient {
   }
 
   pay({required PaymentProcessor paymentProcessor}) async {
-    paymentProcessor.pay();
+    return paymentProcessor.pay();
   }
 
   checkPayment({required PaymentChecker paymentChecker}) async {
-    paymentChecker.checkPayment();
+    return paymentChecker.checkPayment();
   }
 }

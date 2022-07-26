@@ -11,29 +11,30 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Colombia's holidays Check Package.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+[x] Get the holidays of a year.  
+[x] Check if a date is a holiday.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Create an instance of ColombiaHolidays and call the methods you need.
+
 
 ```dart
-const like = 'sample';
+void main() async {
+  ColombiaHolidays holidays = ColombiaHolidays();
+
+// Get all holidays by Year
+  final holidaysByYear = await holidays.getHolidays(year: 2020);
+  // Result is a List of Holidays
+  print(holidaysByYear);
+
+// Check if a date is a holiday
+  final isHoliday = await holidays.isHoliday(day: 20, month: 12, year: 2022);
+  // Result is a bool
+  print(isHoliday);
+}
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.

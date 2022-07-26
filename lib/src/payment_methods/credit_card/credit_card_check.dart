@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:wompi_pago/src/src_exports.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 /// Comprueba el estado del pago con tarjeta de crédito
 ///
@@ -31,11 +31,15 @@ class CreditCardCheck extends PaymentChecker {
 
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    final respuestaConsulta =
-        ConsultaTarjeta.fromJson(json.decode(response.body));
-    if (respuestaConsulta.data.status == 'PENDING') {
-      checkPayment();
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final respuestaConsulta =
+          ConsultaTarjeta.fromJson(json.decode(response.body));
+      if (respuestaConsulta.data.status == 'PENDING') {
+        checkPayment();
+      }
+      return respuestaConsulta;
+    } else {
+      throw ArgumentError(response.body);
     }
-    return respuestaConsulta;
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:wompi_pago/src/src_exports.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class PsePay extends PaymentProcessor {
   final PseRequest pseRequest;
@@ -20,7 +20,7 @@ class PsePay extends PaymentProcessor {
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer' + wompiClient.llavePublica
+      'Authorization': 'Bearer ' + wompiClient.llavePublica
     };
 
     Map<String, dynamic> body = {
@@ -47,12 +47,16 @@ class PsePay extends PaymentProcessor {
     final response = await HttpClientAdapter.post(
         url: urlCompleta, headers: headers, body: body);
 
-    final respuestaPago = RespuestaPse.fromJson(json.decode(response.body));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final respuestaPago = RespuestaPse.fromJson(json.decode(response.body));
 
-    final urlPago =
-        await _checkPaymentUrl(transactionId: respuestaPago.data.id);
+      final urlPago =
+          await _checkPaymentUrl(transactionId: respuestaPago.data.id);
 
-    return urlPago;
+      return urlPago;
+    } else {
+      throw ArgumentError(response.body);
+    }
   }
 
   Future<String> _checkPaymentUrl({required String transactionId}) async {
@@ -61,13 +65,18 @@ class PsePay extends PaymentProcessor {
 
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    final respuestaConsulta = RespuestaPse.fromJson(json.decode(response.body));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final respuestaConsulta =
+          RespuestaPse.fromJson(json.decode(response.body));
 
-    if (respuestaConsulta.data.paymentMethod.extra == null) {
-      Timer(const Duration(seconds: 2), () {
-        _checkPaymentUrl(transactionId: transactionId);
-      });
+      if (respuestaConsulta.data.paymentMethod.extra == null) {
+        Timer(const Duration(seconds: 2), () {
+          _checkPaymentUrl(transactionId: transactionId);
+        });
+      }
+      return respuestaConsulta.data.paymentMethod.extra!.asyncPaymentUrl;
+    } else {
+      throw ArgumentError(response.body);
     }
-    return respuestaConsulta.data.paymentMethod.extra!.asyncPaymentUrl;
   }
 }

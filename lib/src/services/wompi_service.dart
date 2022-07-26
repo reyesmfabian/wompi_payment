@@ -1,7 +1,7 @@
-import 'package:wompi_pago/src/services/wompi_client.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-abstract class WompiService {
+class WompiService {
   final WompiClient wompiClient;
 
-  WompiService(this.wompiClient);
+  WompiService({required this.wompiClient});
 }

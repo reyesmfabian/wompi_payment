@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:wompi_pago/src/src_exports.dart';
+import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class PseCheck extends PaymentChecker {
   PseCheck({required String transactionId, required WompiClient wompiClient})
@@ -19,12 +19,18 @@ class PseCheck extends PaymentChecker {
 
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    final respuestaConsulta = RespuestaPse.fromJson(json.decode(response.body));
-    if (respuestaConsulta.data.status == 'PENDING') {
-      Timer(const Duration(seconds: 2), () {
-        checkPayment();
-      });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final respuestaConsulta =
+          RespuestaPse.fromJson(json.decode(response.body));
+
+      if (respuestaConsulta.data.status == 'PENDING') {
+        Timer(const Duration(seconds: 2), () {
+          checkPayment();
+        });
+      }
+      return respuestaConsulta;
+    } else {
+      throw ArgumentError(response.body);
     }
-    return respuestaConsulta;
   }
 }
