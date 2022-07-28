@@ -23,7 +23,7 @@ class PseRequest {
   String descripcionPago;
 
   factory PseRequest.fromJson(Map<String, dynamic> json) => PseRequest(
-        tipoPersona: json["tipoPersona"],
+        tipoPersona: TipoPersona.values.byName(json['tipoPersona']),
         tipoDocumento: json["tipoDocumento"],
         amount: json["amount"],
         bankCode: json["bankCode"],
@@ -31,7 +31,7 @@ class PseRequest {
       );
 
   Map<String, dynamic> toJson() => {
-        "tipoPersona": tipoPersona,
+        "tipoPersona": tipoPersona.name,
         "tipoDocumento": tipoDocumento,
         "amount": amount,
         "bankCode": bankCode,

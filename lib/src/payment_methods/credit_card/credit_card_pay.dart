@@ -11,7 +11,7 @@ class CreditCardPay extends PaymentProcessor {
       {required this.creditCard,
       required PaymentRequestData paymentRequest,
       required WompiClient wompiClient})
-      : super(paymentRequest, wompiClient);
+      : super(paymentRequest: paymentRequest, wompiClient: wompiClient);
 
   @override
   Future<RespuestaPagoTarjeta> pay() async {

@@ -56,20 +56,19 @@ class RespuestaPseData {
 
   factory RespuestaPseData.fromJson(Map<String, dynamic> json) =>
       RespuestaPseData(
-        id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        amountInCents: json["amount_in_cents"],
-        reference: json["reference"],
-        currency: json["currency"],
-        paymentMethodType: json["payment_method_type"],
-        paymentMethod:
-            RespuestaPsePaymentMethod.fromJson(json["payment_method"]),
-        redirectUrl: json["redirect_url"],
-        status: json["status"],
-        statusMessage: json["status_message"],
-        merchant: RespuestaPseMerchant.fromJson(json["merchant"]),
-        taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
-      );
+          id: json["id"],
+          createdAt: DateTime.parse(json["created_at"]),
+          amountInCents: json["amount_in_cents"],
+          reference: json["reference"],
+          currency: json["currency"],
+          paymentMethodType: json["payment_method_type"],
+          paymentMethod:
+              RespuestaPsePaymentMethod.fromJson(json["payment_method"]),
+          redirectUrl: json["redirect_url"] ?? "",
+          status: json["status"],
+          statusMessage: json["status_message"] ?? "",
+          merchant: RespuestaPseMerchant.fromJson(json["merchant"] ?? {}),
+          taxes: List<dynamic>.from(json["taxes"].map((x) => x)));
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -110,14 +109,14 @@ class RespuestaPseMerchant {
 
   factory RespuestaPseMerchant.fromJson(Map<String, dynamic> json) =>
       RespuestaPseMerchant(
-        name: json["name"],
-        legalName: json["legal_name"],
-        contactName: json["contact_name"],
-        phoneNumber: json["phone_number"],
-        logoUrl: json["logo_url"],
-        legalIdType: json["legal_id_type"],
-        email: json["email"],
-        legalId: json["legal_id"],
+        name: json["name"] ?? "",
+        legalName: json["legal_name"] ?? "",
+        contactName: json["contact_name"] ?? "",
+        phoneNumber: json["phone_number"] ?? "",
+        logoUrl: json["logo_url"] ?? "",
+        legalIdType: json["legal_id_type"] ?? "",
+        email: json["email"] ?? "",
+        legalId: json["legal_id"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -200,16 +199,17 @@ class RespuestaPseExtra {
 
   factory RespuestaPseExtra.fromJson(Map<String, dynamic> json) =>
       RespuestaPseExtra(
-        ticketId: json["ticket_id"],
-        returnCode: json["return_code"],
-        requestDate: DateTime.parse(json["request_date"]),
-        asyncPaymentUrl: json["async_payment_url"],
-        traceabilityCode: json["traceability_code"],
-        transactionCycle: json["transaction_cycle"],
-        transactionState: json["transaction_state"],
-        externalIdentifier: json["external_identifier"],
-        bankProcessingDate: DateTime.parse(json["bank_processing_date"]),
-      );
+          ticketId: json["ticket_id"] ?? "",
+          returnCode: json["return_code"] ?? "",
+          requestDate:
+              DateTime.parse(json["request_date"] ?? DateTime.now().toString()),
+          asyncPaymentUrl: json["async_payment_url"] ?? "",
+          traceabilityCode: json["traceability_code"] ?? "",
+          transactionCycle: json["transaction_cycle"] ?? "",
+          transactionState: json["transaction_state"] ?? "",
+          externalIdentifier: json["external_identifier"] ?? "",
+          bankProcessingDate: DateTime.parse(
+              json["bank_processing_date"] ?? DateTime.now().toString()));
 
   Map<String, dynamic> toJson() => {
         "ticket_id": ticketId,

@@ -115,10 +115,10 @@ class NequiMerchant {
         legalName: json["legal_name"],
         contactName: json["contact_name"],
         phoneNumber: json["phone_number"],
-        logoUrl: json["logo_url"],
-        legalIdType: json["legal_id_type"],
-        email: json["email"],
-        legalId: json["legal_id"],
+        logoUrl: json["logo_url"] ?? "",
+        legalIdType: json["legal_id_type"] ?? "",
+        email: json["email"] ?? "",
+        legalId: json["legal_id"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -167,23 +167,19 @@ class NequiExtra {
   NequiExtra({
     required this.transactionId,
     required this.externalIdentifier,
-    required this.nequiTransactionId,
   });
 
   String transactionId;
   String externalIdentifier;
-  String nequiTransactionId;
 
   factory NequiExtra.fromJson(Map<String, dynamic> json) => NequiExtra(
         transactionId: json["transaction_id"],
         externalIdentifier: json["external_identifier"],
-        nequiTransactionId: json["nequi_transaction_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "transaction_id": transactionId,
         "external_identifier": externalIdentifier,
-        "nequi_transaction_id": nequiTransactionId,
       };
 }
 

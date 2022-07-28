@@ -1,31 +1,24 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class NequiCheck extends PaymentChecker {
   NequiCheck({required String transactionId, required WompiClient wompiClient})
-      : super(transactionId, wompiClient);
+      : super(transactionId: transactionId, wompiClient: wompiClient);
 
   @override
   Future<ConsultaNequi> checkPayment() async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/transactions/$transactionId";
 
-    // Map<String, String> headers = {
-    //   "Content-type": "application/json",
-    //   'Authorization': 'Bearer' + wompiClient.llavePublica
-    // };
-
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaConsulta =
+      ConsultaNequi respuestaConsulta =
           ConsultaNequi.fromJson(json.decode(response.body));
       if (respuestaConsulta.data.status == 'PENDING') {
-        Timer(const Duration(seconds: 2), () {
-          checkPayment();
-        });
+        await Future.delayed(const Duration(seconds: 10));
+        return checkPayment();
       }
       return respuestaConsulta;
     } else {

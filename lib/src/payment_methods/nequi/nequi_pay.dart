@@ -3,14 +3,21 @@ import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class NequiPay extends PaymentProcessor {
   final int amount;
+  final String phoneNumberToPay;
+
   NequiPay(
       {required this.amount,
       required PaymentRequestData paymentRequest,
+      required this.phoneNumberToPay,
       required WompiClient wompiClient})
-      : super(paymentRequest, wompiClient);
+      : super(paymentRequest: paymentRequest, wompiClient: wompiClient);
 
   @override
   Future<RespuestaPagoNequi> pay() async {
+    if (phoneNumberToPay.length != 10) {
+      throw ArgumentError('El numero de teléfono debe tener 10 dígitos');
+    }
+
     String url = wompiClient.wompiUrl;
     // GENERAR PAGO
     String urlCompleta = "$url/v1/transactions/";
@@ -27,10 +34,7 @@ class NequiPay extends PaymentProcessor {
       'reference': wompiClient.prefijoComercio + paymentRequest.reference,
       'customer_email': paymentRequest.email,
       'currency': wompiClient.moneda,
-      'payment_method': {
-        'type': 'NEQUI',
-        'phone_number': paymentRequest.phone,
-      },
+      'payment_method': {'type': 'NEQUI', 'phone_number': phoneNumberToPay},
       'customer_data': {
         'phone_number': paymentRequest.phone,
         'full_name': paymentRequest.name

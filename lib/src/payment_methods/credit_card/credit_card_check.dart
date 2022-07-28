@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
@@ -13,7 +14,7 @@ import 'package:wompi_payment_colombia/src/src_exports.dart';
 class CreditCardCheck extends PaymentChecker {
   CreditCardCheck(
       {required String transactionId, required WompiClient wompiClient})
-      : super(transactionId, wompiClient);
+      : super(transactionId: transactionId, wompiClient: wompiClient);
 
   /// Comprueba el estado de la transacción.
   ///
@@ -35,7 +36,9 @@ class CreditCardCheck extends PaymentChecker {
       final respuestaConsulta =
           ConsultaTarjeta.fromJson(json.decode(response.body));
       if (respuestaConsulta.data.status == 'PENDING') {
-        checkPayment();
+        Timer(const Duration(seconds: 2), () {
+          checkPayment();
+        });
       }
       return respuestaConsulta;
     } else {

@@ -10,10 +10,10 @@ class PsePay extends PaymentProcessor {
       {required this.pseRequest,
       required PaymentRequestData paymentRequest,
       required WompiClient wompiClient})
-      : super(paymentRequest, wompiClient);
+      : super(paymentRequest: paymentRequest, wompiClient: wompiClient);
 
   @override
-  Future<String> pay() async {
+  Future<RespuestaPse> pay() async {
     String url = wompiClient.wompiUrl;
     // GENERAR PAGO
     String urlCompleta = "$url/v1/transactions/";
@@ -32,7 +32,7 @@ class PsePay extends PaymentProcessor {
       'currency': wompiClient.moneda,
       "payment_method": {
         "type": "PSE",
-        "user_type": pseRequest.tipoPersona,
+        "user_type": pseRequest.tipoPersona.index,
         "user_legal_id_type": pseRequest.tipoDocumento,
         "user_legal_id": paymentRequest.document,
         "financial_institution_code": pseRequest.bankCode,
@@ -50,33 +50,35 @@ class PsePay extends PaymentProcessor {
     if (response.statusCode == 200 || response.statusCode == 201) {
       final respuestaPago = RespuestaPse.fromJson(json.decode(response.body));
 
-      final urlPago =
+      final respuestaPse =
           await _checkPaymentUrl(transactionId: respuestaPago.data.id);
 
-      return urlPago;
+      return respuestaPse;
     } else {
       throw ArgumentError(response.body);
     }
   }
 
-  Future<String> _checkPaymentUrl({required String transactionId}) async {
+  Future<RespuestaPse> _checkPaymentUrl({required String transactionId}) async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/transactions/$transactionId";
 
-    final response = await HttpClientAdapter.get(url: urlCompleta);
+    dynamic response;
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaConsulta =
-          RespuestaPse.fromJson(json.decode(response.body));
+    await Future.delayed(const Duration(seconds: 3), () async {
+      response = await HttpClientAdapter.get(url: urlCompleta);
+    });
 
-      if (respuestaConsulta.data.paymentMethod.extra == null) {
-        Timer(const Duration(seconds: 2), () {
-          _checkPaymentUrl(transactionId: transactionId);
-        });
-      }
-      return respuestaConsulta.data.paymentMethod.extra!.asyncPaymentUrl;
-    } else {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
+    final respuestaConsulta = RespuestaPse.fromJson(json.decode(response.body));
+
+    if (respuestaConsulta.data.status == "ERROR") {
+      throw ArgumentError(respuestaConsulta.data.statusMessage);
+    }
+
+    return respuestaConsulta;
   }
 }

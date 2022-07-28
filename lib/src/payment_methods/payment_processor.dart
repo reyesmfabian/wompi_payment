@@ -1,9 +1,10 @@
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-abstract class PaymentProcessor extends WompiService {
+abstract class PaymentProcessor {
+  final WompiClient wompiClient;
+
   final PaymentRequestData paymentRequest;
-  PaymentProcessor(this.paymentRequest, WompiClient wompiClient)
-      : super(wompiClient: wompiClient);
+  PaymentProcessor({required this.paymentRequest, required this.wompiClient});
 
   pay() {}
 }
