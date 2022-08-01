@@ -22,8 +22,9 @@ and the Flutter guide for
 ## Usage
 
 
-```
+
 import 'package:wompi_payment_colombia/src/src_exports.dart';
+```
 void main() async {
   /// *# Create a new instance of the WompiClient*
   ///
