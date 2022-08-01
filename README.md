@@ -23,8 +23,9 @@ and the Flutter guide for
 
 
 
-import 'package:wompi_payment_colombia/src/src_exports.dart';
 ```
+import 'package:wompi_payment_colombia/src/src_exports.dart';
+
 void main() async {
   /// *# Create a new instance of the WompiClient*
   ///
