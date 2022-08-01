@@ -27,8 +27,8 @@ and the Flutter guide for
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 void main() async {
-  /// *# Create a new instance of the WompiClient*
-  ///
+  // *# Create a new instance of the WompiClient*
+
   WompiClient wompiClient = WompiClient(
     publicKey: 'BusinessPublicKey', // Business Public Key
     environment:
@@ -37,17 +37,17 @@ void main() async {
     currency: 'COP', // Currency for the payments
   );
 
-  /// First you need to GET the acceptance token from the server, this is the token that will be used to make the payment.
-  /// The user must be explicitly accepted the terms and conditions of the payment.
+  // First you need to GET the acceptance token from the server, this is the token that will be used to make the payment.
+  // The user must be explicitly accepted the terms and conditions of the payment.
   final acceptance = await WompiService.getAcceptance(wompiClient: wompiClient);
 
-  /// Get the link to the PDF file with the terms. The user must be explicitly accepted the terms and conditions of the payment.
+  ///Get the link to the PDF file with the terms. The user must be explicitly accepted the terms and conditions of the payment.
   final pdfTermsLink = acceptance.data.presignedAcceptance.permalink;
 
-  /// Get the token from the server and use it to make the payment.
+  // Get the token from the server and use it to make the payment.
   final acceptanceToken = acceptance.data.presignedAcceptance.acceptanceToken;
 
-  /// For every method you need to create an instance of the PaymentRequestData
+  // For every method you need to create an instance of the PaymentRequestData
   PaymentRequestData paymentRequestData = PaymentRequestData(
       email:
           "test@mail.com", // The email of the user who will make the payment.
@@ -61,8 +61,8 @@ void main() async {
 
       );
 
-  /// *------------------ # MAKE A CREDIT CARD PAYMENT ------------------ *
-  ///
+  // *------------------ # MAKE A CREDIT CARD PAYMENT ------------------ *
+  
   CreditCard creditCard = CreditCard(
       cardNumber: "1111111111111111", // Credit card number
       cvcCode: "123", // CVC code
@@ -73,26 +73,26 @@ void main() async {
       cardHolder: "Customer Name" // Card holder name
       );
 
-  /// Create instance fot Payment
+  // Create instance fot Payment
   CreditCardPay creditCardPay = CreditCardPay(
       creditCard: creditCard, // Credit card information
       paymentRequest: paymentRequestData, // Payment request data
       wompiClient: wompiClient // Wompi client
       );
 
-  /// Make the payment with the credit card information.
+  // Make the payment with the credit card information.
   final CardPaymentResponse cardPayment =
       await WompiService.pay(paymentProcessor: creditCardPay);
 
-  /// Check the response of the payment.
+  // Check the response of the payment.
   final CardCheckModel cardCheck = await WompiService.checkPayment(
       paymentChecker: CreditCardCheck(
           transactionId: cardPayment.data.id, wompiClient: wompiClient));
 
   print(cardCheck.data.status);
 
-  /// *------------------ # MAKE A NEQUI PAYMENT ------------------ *
-  ///
+  // *------------------ # MAKE A NEQUI PAYMENT ------------------ *
+  
   NequiPay nequiPay = NequiPay(
       paymentRequest: paymentRequestData, // Payment request data
       wompiClient: wompiClient, // Wompi client
@@ -111,14 +111,14 @@ void main() async {
   print(nequiCheck.data.status);
 
   /// *------------------ # MAKE A PSE PAYMENT ------------------ *
-  ///
-  ///
-  /// First you need to get the List of banks to allow the user to choose one.
+  
+  
+  // First you need to get the List of banks to allow the user to choose one.
   final banks = await WompiService.getBanks(wompiClient: wompiClient);
   final selectedBank =
       banks.first; // In this case the user select the first Bank.
 
-  /// Create instance for the PSE Request
+  // Create instance for the PSE Request
   final pseRequest = PseRequest(
       personType: PersonType.natural, // Person type
       documentType: "CC", // Document type
@@ -127,7 +127,7 @@ void main() async {
       paymentDescription: "Test Payment" // Payment description
       );
 
-  /// Create the payment with the PSE information.
+  // Create the payment with the PSE information.
   final psePay = PsePay(
       pseRequest: pseRequest, // PSE request data
       paymentRequest: paymentRequestData, // Payment request data
