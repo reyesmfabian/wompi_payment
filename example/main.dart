@@ -4,11 +4,11 @@ void main() async {
   /// *# Create a new instance of the WompiClient*
   ///
   WompiClient wompiClient = WompiClient(
-    publicKey: 'BusinessPublicKey',
+    publicKey: 'BusinessPublicKey', // Business Public Key
     environment:
         Environment.PRODUCTION, // or Environment.TEST for testing purposes,
-    businessPrefix: 'FR-',
-    currency: 'COP',
+    businessPrefix: 'FR-', // Business Prefix
+    currency: 'COP', // Currency for the payments
   );
 
   /// First you need to GET the acceptance token from the server, this is the token that will be used to make the payment.
@@ -35,7 +35,7 @@ void main() async {
 
       );
 
-  /// *# MAKE A CREDIT CARD PAYMENT*
+  /// *------------------ # MAKE A CREDIT CARD PAYMENT ------------------ *
   ///
   CreditCard creditCard = CreditCard(
       cardNumber: "1111111111111111", // Credit card number
@@ -65,7 +65,7 @@ void main() async {
 
   print(cardCheck.data.status);
 
-  /// *# MAKE A NEQUI PAYMENT*
+  /// *------------------ # MAKE A NEQUI PAYMENT ------------------ *
   ///
   NequiPay nequiPay = NequiPay(
       paymentRequest: paymentRequestData, // Payment request data
@@ -84,7 +84,7 @@ void main() async {
           transactionId: nequiPayment.data.id, wompiClient: wompiClient));
   print(nequiCheck.data.status);
 
-  /// *# MAKE A PSE PAYMENT*
+  /// *------------------ # MAKE A PSE PAYMENT ------------------ *
   ///
   ///
   /// First you need to get the List of banks to allow the user to choose one.
