@@ -1,24 +1,22 @@
 import 'dart:convert';
 
-TarjetaTokenizada tarjetaTokenizadaFromJson(String str) =>
-    TarjetaTokenizada.fromJson(json.decode(str));
+TokenizedCard tokenizedCardFromJson(String str) =>
+    TokenizedCard.fromJson(json.decode(str));
 
-String tarjetaTokenizadaToJson(TarjetaTokenizada data) =>
-    json.encode(data.toJson());
+String tokenizedCardToJson(TokenizedCard data) => json.encode(data.toJson());
 
-class TarjetaTokenizada {
-  TarjetaTokenizada({
+class TokenizedCard {
+  TokenizedCard({
     required this.status,
     required this.data,
   });
 
   String status;
-  TarjetaTokenizadaData data;
+  TokenizedCardData data;
 
-  factory TarjetaTokenizada.fromJson(Map<String, dynamic> json) =>
-      TarjetaTokenizada(
+  factory TokenizedCard.fromJson(Map<String, dynamic> json) => TokenizedCard(
         status: json["status"],
-        data: TarjetaTokenizadaData.fromJson(json["data"]),
+        data: TokenizedCardData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +25,8 @@ class TarjetaTokenizada {
       };
 }
 
-class TarjetaTokenizadaData {
-  TarjetaTokenizadaData({
+class TokenizedCardData {
+  TokenizedCardData({
     required this.id,
     required this.createdAt,
     required this.brand,
@@ -52,8 +50,8 @@ class TarjetaTokenizadaData {
   String cardHolder;
   DateTime expiresAt;
 
-  factory TarjetaTokenizadaData.fromJson(Map<String, dynamic> json) =>
-      TarjetaTokenizadaData(
+  factory TokenizedCardData.fromJson(Map<String, dynamic> json) =>
+      TokenizedCardData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         brand: json["brand"],

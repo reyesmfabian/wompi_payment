@@ -7,22 +7,24 @@ class NequiCheck extends PaymentChecker {
       : super(transactionId: transactionId, wompiClient: wompiClient);
 
   @override
-  Future<ConsultaNequi> checkPayment() async {
+  Future<NequiCheckModel> checkPayment() async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/transactions/$transactionId";
 
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ConsultaNequi respuestaConsulta =
-          ConsultaNequi.fromJson(json.decode(response.body));
-      if (respuestaConsulta.data.status == 'PENDING') {
-        await Future.delayed(const Duration(seconds: 10));
-        return checkPayment();
-      }
-      return respuestaConsulta;
-    } else {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
+    NequiCheckModel respuestaConsulta =
+        NequiCheckModel.fromJson(json.decode(response.body));
+
+    if (respuestaConsulta.data.status == 'PENDING') {
+      await Future.delayed(const Duration(seconds: 10));
+      return checkPayment();
+    }
+
+    return respuestaConsulta;
   }
 }

@@ -4,14 +4,13 @@
 
 import 'dart:convert';
 
-ConsultaTarjeta consultaTarjetaFromJson(String str) =>
-    ConsultaTarjeta.fromJson(json.decode(str));
+CardCheckModel cardCheckModelFromJson(String str) =>
+    CardCheckModel.fromJson(json.decode(str));
 
-String consultaTarjetaToJson(ConsultaTarjeta data) =>
-    json.encode(data.toJson());
+String cardCheckModelToJson(CardCheckModel data) => json.encode(data.toJson());
 
-class ConsultaTarjeta {
-  ConsultaTarjeta({
+class CardCheckModel {
+  CardCheckModel({
     required this.data,
     required this.meta,
   });
@@ -19,8 +18,7 @@ class ConsultaTarjeta {
   CardData data;
   CardMeta meta;
 
-  factory ConsultaTarjeta.fromJson(Map<String, dynamic> json) =>
-      ConsultaTarjeta(
+  factory CardCheckModel.fromJson(Map<String, dynamic> json) => CardCheckModel(
         data: CardData.fromJson(json["data"]),
         meta: CardMeta.fromJson(json["meta"]),
       );

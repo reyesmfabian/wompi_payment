@@ -14,13 +14,13 @@ class CreditCardPay extends PaymentProcessor {
       : super(paymentRequest: paymentRequest, wompiClient: wompiClient);
 
   @override
-  Future<RespuestaPagoTarjeta> pay() async {
+  Future<CardPaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/tokens/cards";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.llavePublica
+      'Authorization': 'Bearer ' + wompiClient.publicKey
     };
 
     Map<String, dynamic> body = {
@@ -35,7 +35,11 @@ class CreditCardPay extends PaymentProcessor {
     var response = await HttpClientAdapter.post(
         url: urlCompleta, headers: headers, body: body);
 
-    final tarjeta = TarjetaTokenizada.fromJson(json.decode(response.body));
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw ArgumentError(response.body);
+    }
+
+    final tarjeta = TokenizedCard.fromJson(json.decode(response.body));
 
     final tokenTarjeta = tarjeta.data.id;
 
@@ -44,16 +48,16 @@ class CreditCardPay extends PaymentProcessor {
 
     headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.llavePublica
+      'Authorization': 'Bearer ' + wompiClient.publicKey
     };
 
     body = {
       'acceptance_token': paymentRequest.acceptanceToken,
-      'public_key': wompiClient.llavePublica,
+      'public_key': wompiClient.publicKey,
       'amount_in_cents': creditCard.amount * 100,
-      'reference': wompiClient.prefijoComercio + paymentRequest.reference,
+      'reference': wompiClient.businessPrefix + paymentRequest.reference,
       'customer_email': paymentRequest.email,
-      'currency': wompiClient.moneda,
+      'currency': wompiClient.currency,
       'payment_method': {
         'type': 'CARD',
         'installments': creditCard.quotas,
@@ -68,12 +72,13 @@ class CreditCardPay extends PaymentProcessor {
     response = await HttpClientAdapter.post(
         url: urlCompleta, headers: headers, body: body);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaPago =
-          RespuestaPagoTarjeta.fromJson(json.decode(response.body));
-      return respuestaPago;
-    } else {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
+    final respuestaPago =
+        CardPaymentResponse.fromJson(json.decode(response.body));
+
+    return respuestaPago;
   }
 }

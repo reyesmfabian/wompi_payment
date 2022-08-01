@@ -1,16 +1,17 @@
 // To parse this JSON data, do
 //
-//     final consultaNequi = consultaNequiFromJson(jsonString);
+//     final NequiCheckModel = NequiCheckModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ConsultaNequi consultaNequiFromJson(String str) =>
-    ConsultaNequi.fromJson(json.decode(str));
+NequiCheckModel nequiCheckModelFromJson(String str) =>
+    NequiCheckModel.fromJson(json.decode(str));
 
-String consultaNequiToJson(ConsultaNequi data) => json.encode(data.toJson());
+String nequiCheckModelToJson(NequiCheckModel data) =>
+    json.encode(data.toJson());
 
-class ConsultaNequi {
-  ConsultaNequi({
+class NequiCheckModel {
+  NequiCheckModel({
     required this.data,
     required this.meta,
   });
@@ -18,7 +19,8 @@ class ConsultaNequi {
   NequiData data;
   NequiMeta meta;
 
-  factory ConsultaNequi.fromJson(Map<String, dynamic> json) => ConsultaNequi(
+  factory NequiCheckModel.fromJson(Map<String, dynamic> json) =>
+      NequiCheckModel(
         data: NequiData.fromJson(json["data"]),
         meta: NequiMeta.fromJson(json["meta"]),
       );

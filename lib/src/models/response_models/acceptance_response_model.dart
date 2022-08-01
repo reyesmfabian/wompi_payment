@@ -1,24 +1,24 @@
 // To parse this JSON data, do
 //
-//     final modeloAceptacion = modeloAceptacionFromJson(jsonString);
+//     final AcceptanceResponse = AcceptanceResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-ModeloAceptacion modeloAceptacionFromJson(String str) =>
-    ModeloAceptacion.fromJson(json.decode(str));
+AcceptanceResponse acceptanceResponseFromJson(String str) =>
+    AcceptanceResponse.fromJson(json.decode(str));
 
-String modeloAceptacionToJson(ModeloAceptacion data) =>
+String acceptanceResponseToJson(AcceptanceResponse data) =>
     json.encode(data.toJson());
 
-class ModeloAceptacion {
-  ModeloAceptacion({
+class AcceptanceResponse {
+  AcceptanceResponse({
     required this.data,
   });
 
   Data data;
 
-  factory ModeloAceptacion.fromJson(Map<String, dynamic> json) =>
-      ModeloAceptacion(
+  factory AcceptanceResponse.fromJson(Map<String, dynamic> json) =>
+      AcceptanceResponse(
         data: Data.fromJson(json["data"]),
       );
 

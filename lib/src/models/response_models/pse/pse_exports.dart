@@ -1,1 +1,1 @@
-export 'respuesta_pse.dart';
+export 'pse_payment_response_model.dart';

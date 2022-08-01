@@ -5,36 +5,36 @@ PseRequest pseRequestFromJson(String str) =>
 
 String pseRequestToJson(PseRequest data) => json.encode(data.toJson());
 
-enum TipoPersona { natural, juridica }
+enum PersonType { natural, juridica }
 
 class PseRequest {
   PseRequest({
-    required this.tipoPersona,
-    required this.tipoDocumento,
+    required this.personType,
+    required this.documentType,
     required this.amount,
     required this.bankCode,
-    required this.descripcionPago,
+    required this.paymentDescription,
   });
 
-  TipoPersona tipoPersona;
-  String tipoDocumento;
+  PersonType personType;
+  String documentType;
   int amount;
   String bankCode;
-  String descripcionPago;
+  String paymentDescription;
 
   factory PseRequest.fromJson(Map<String, dynamic> json) => PseRequest(
-        tipoPersona: TipoPersona.values.byName(json['tipoPersona']),
-        tipoDocumento: json["tipoDocumento"],
+        personType: PersonType.values.byName(json['personType']),
+        documentType: json["documentType"],
         amount: json["amount"],
         bankCode: json["bankCode"],
-        descripcionPago: json["descripcionPago"],
+        paymentDescription: json["paymentDescription"],
       );
 
   Map<String, dynamic> toJson() => {
-        "tipoPersona": tipoPersona.name,
-        "tipoDocumento": tipoDocumento,
+        "personType": personType,
+        "documentType": documentType,
         "amount": amount,
         "bankCode": bankCode,
-        "descripcionPago": descripcionPago,
+        "paymentDescription": paymentDescription,
       };
 }

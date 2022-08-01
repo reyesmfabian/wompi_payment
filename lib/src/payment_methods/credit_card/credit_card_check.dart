@@ -16,33 +16,29 @@ class CreditCardCheck extends PaymentChecker {
       {required String transactionId, required WompiClient wompiClient})
       : super(transactionId: transactionId, wompiClient: wompiClient);
 
-  /// Comprueba el estado de la transacción.
+  /// Check the status of the transaction.
   ///
   /// Returns:
-  ///   Un objeto Future<ConsultaTarjeta>.
+  /// A Future<CardCheckModel> object.
   @override
-  Future<ConsultaTarjeta> checkPayment() async {
+  Future<CardCheckModel> checkPayment() async {
     String url = wompiClient.wompiUrl;
     String urlCompleta = "$url/v1/transactions/$transactionId";
 
-    // Map<String, String> headers = {
-    //   "Content-type": "application/json",
-    //   'Authorization': 'Bearer' + wompiClient.llavePublica
-    // };
-
     final response = await HttpClientAdapter.get(url: urlCompleta);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaConsulta =
-          ConsultaTarjeta.fromJson(json.decode(response.body));
-      if (respuestaConsulta.data.status == 'PENDING') {
-        Timer(const Duration(seconds: 2), () {
-          checkPayment();
-        });
-      }
-      return respuestaConsulta;
-    } else {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
+    final respuestaConsulta =
+        CardCheckModel.fromJson(json.decode(response.body));
+
+    if (respuestaConsulta.data.status == 'PENDING') {
+      await Future.delayed(const Duration(seconds: 10));
+      return checkPayment();
+    }
+
+    return respuestaConsulta;
   }
 }

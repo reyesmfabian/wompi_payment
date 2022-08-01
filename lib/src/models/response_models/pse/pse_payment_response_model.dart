@@ -1,22 +1,24 @@
 import 'dart:convert';
 
-RespuestaPse respuestaPseFromJson(String str) =>
-    RespuestaPse.fromJson(json.decode(str));
+PsePaymentResponse psePaymentResponseFromJson(String str) =>
+    PsePaymentResponse.fromJson(json.decode(str));
 
-String respuestaPseToJson(RespuestaPse data) => json.encode(data.toJson());
+String psePaymentResponseToJson(PsePaymentResponse data) =>
+    json.encode(data.toJson());
 
-class RespuestaPse {
-  RespuestaPse({
+class PsePaymentResponse {
+  PsePaymentResponse({
     required this.data,
     required this.meta,
   });
 
-  RespuestaPseData data;
-  RespuestaPseMeta meta;
+  PsePaymentResponseData data;
+  PsePaymentResponseMeta meta;
 
-  factory RespuestaPse.fromJson(Map<String, dynamic> json) => RespuestaPse(
-        data: RespuestaPseData.fromJson(json["data"]),
-        meta: RespuestaPseMeta.fromJson(json["meta"]),
+  factory PsePaymentResponse.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponse(
+        data: PsePaymentResponseData.fromJson(json["data"]),
+        meta: PsePaymentResponseMeta.fromJson(json["meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -25,8 +27,8 @@ class RespuestaPse {
       };
 }
 
-class RespuestaPseData {
-  RespuestaPseData({
+class PsePaymentResponseData {
+  PsePaymentResponseData({
     required this.id,
     required this.createdAt,
     required this.amountInCents,
@@ -47,15 +49,15 @@ class RespuestaPseData {
   String reference;
   String currency;
   String paymentMethodType;
-  RespuestaPsePaymentMethod paymentMethod;
+  PsePaymentResponsePaymentMethod paymentMethod;
   String redirectUrl;
   String status;
   String statusMessage;
-  RespuestaPseMerchant merchant;
+  PsePaymentResponseMerchant merchant;
   List<dynamic> taxes;
 
-  factory RespuestaPseData.fromJson(Map<String, dynamic> json) =>
-      RespuestaPseData(
+  factory PsePaymentResponseData.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponseData(
           id: json["id"],
           createdAt: DateTime.parse(json["created_at"]),
           amountInCents: json["amount_in_cents"],
@@ -63,11 +65,11 @@ class RespuestaPseData {
           currency: json["currency"],
           paymentMethodType: json["payment_method_type"],
           paymentMethod:
-              RespuestaPsePaymentMethod.fromJson(json["payment_method"]),
+              PsePaymentResponsePaymentMethod.fromJson(json["payment_method"]),
           redirectUrl: json["redirect_url"] ?? "",
           status: json["status"],
           statusMessage: json["status_message"] ?? "",
-          merchant: RespuestaPseMerchant.fromJson(json["merchant"] ?? {}),
+          merchant: PsePaymentResponseMerchant.fromJson(json["merchant"] ?? {}),
           taxes: List<dynamic>.from(json["taxes"].map((x) => x)));
 
   Map<String, dynamic> toJson() => {
@@ -86,8 +88,8 @@ class RespuestaPseData {
       };
 }
 
-class RespuestaPseMerchant {
-  RespuestaPseMerchant({
+class PsePaymentResponseMerchant {
+  PsePaymentResponseMerchant({
     required this.name,
     required this.legalName,
     required this.contactName,
@@ -107,8 +109,8 @@ class RespuestaPseMerchant {
   String email;
   String legalId;
 
-  factory RespuestaPseMerchant.fromJson(Map<String, dynamic> json) =>
-      RespuestaPseMerchant(
+  factory PsePaymentResponseMerchant.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponseMerchant(
         name: json["name"] ?? "",
         legalName: json["legal_name"] ?? "",
         contactName: json["contact_name"] ?? "",
@@ -131,8 +133,8 @@ class RespuestaPseMerchant {
       };
 }
 
-class RespuestaPsePaymentMethod {
-  RespuestaPsePaymentMethod({
+class PsePaymentResponsePaymentMethod {
+  PsePaymentResponsePaymentMethod({
     required this.type,
     this.extra,
     required this.userType,
@@ -143,19 +145,19 @@ class RespuestaPsePaymentMethod {
   });
 
   String type;
-  RespuestaPseExtra? extra;
+  PsePaymentResponseExtra? extra;
   int userType;
   String userLegalId;
   String userLegalIdType;
   String paymentDescription;
   String financialInstitutionCode;
 
-  factory RespuestaPsePaymentMethod.fromJson(Map<String, dynamic> json) =>
-      RespuestaPsePaymentMethod(
+  factory PsePaymentResponsePaymentMethod.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponsePaymentMethod(
         type: json["type"],
         extra: json["extra"] == null
             ? null
-            : RespuestaPseExtra.fromJson(json["extra"]),
+            : PsePaymentResponseExtra.fromJson(json["extra"]),
         userType: json["user_type"],
         userLegalId: json["user_legal_id"],
         userLegalIdType: json["user_legal_id_type"],
@@ -174,8 +176,8 @@ class RespuestaPsePaymentMethod {
       };
 }
 
-class RespuestaPseExtra {
-  RespuestaPseExtra({
+class PsePaymentResponseExtra {
+  PsePaymentResponseExtra({
     required this.ticketId,
     required this.returnCode,
     required this.requestDate,
@@ -197,8 +199,8 @@ class RespuestaPseExtra {
   String externalIdentifier;
   DateTime bankProcessingDate;
 
-  factory RespuestaPseExtra.fromJson(Map<String, dynamic> json) =>
-      RespuestaPseExtra(
+  factory PsePaymentResponseExtra.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponseExtra(
           ticketId: json["ticket_id"] ?? "",
           returnCode: json["return_code"] ?? "",
           requestDate:
@@ -226,15 +228,15 @@ class RespuestaPseExtra {
       };
 }
 
-class RespuestaPseMeta {
-  RespuestaPseMeta({
+class PsePaymentResponseMeta {
+  PsePaymentResponseMeta({
     required this.traceId,
   });
 
   String traceId;
 
-  factory RespuestaPseMeta.fromJson(Map<String, dynamic> json) =>
-      RespuestaPseMeta(
+  factory PsePaymentResponseMeta.fromJson(Map<String, dynamic> json) =>
+      PsePaymentResponseMeta(
         traceId: json["trace_id"],
       );
 

@@ -11,16 +11,16 @@ class PaymentRequestData {
     required this.email,
     required this.phone,
     required this.name,
-    required this.acceptanceToken,
     required this.reference,
+    required this.acceptanceToken,
     required this.document,
   });
 
   String email;
   String phone;
   String name;
-  String acceptanceToken;
   String reference;
+  String acceptanceToken;
   String document;
 
   factory PaymentRequestData.fromJson(Map<String, dynamic> json) =>

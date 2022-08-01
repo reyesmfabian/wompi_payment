@@ -1,3 +1,3 @@
-export 'consulta_tarjeta.dart';
-export 'respuesta_pago_tarjeta.dart';
-export 'tarjeta_tokenizada.dart';
+export 'card_check_model.dart';
+export 'card_response_model.dart';
+export 'tokenized_card_model.dart';

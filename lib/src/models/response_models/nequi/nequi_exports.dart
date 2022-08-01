@@ -1,2 +1,2 @@
-export 'consulta_nequi.dart';
-export 'repuesta_pago_nequi.dart';
+export 'nequi_check_model.dart';
+export 'nequi_payment_response_model.dart';

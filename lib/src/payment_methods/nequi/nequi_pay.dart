@@ -13,7 +13,7 @@ class NequiPay extends PaymentProcessor {
       : super(paymentRequest: paymentRequest, wompiClient: wompiClient);
 
   @override
-  Future<RespuestaPagoNequi> pay() async {
+  Future<NequiPaymentResponse> pay() async {
     if (phoneNumberToPay.length != 10) {
       throw ArgumentError('El numero de teléfono debe tener 10 dígitos');
     }
@@ -24,16 +24,16 @@ class NequiPay extends PaymentProcessor {
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.llavePublica
+      'Authorization': 'Bearer ' + wompiClient.publicKey
     };
 
     Map<String, dynamic> body = {
       'acceptance_token': paymentRequest.acceptanceToken,
-      'public_key': wompiClient.llavePublica,
+      'public_key': wompiClient.publicKey,
       'amount_in_cents': amount * 100,
-      'reference': wompiClient.prefijoComercio + paymentRequest.reference,
+      'reference': wompiClient.businessPrefix + paymentRequest.reference,
       'customer_email': paymentRequest.email,
-      'currency': wompiClient.moneda,
+      'currency': wompiClient.currency,
       'payment_method': {'type': 'NEQUI', 'phone_number': phoneNumberToPay},
       'customer_data': {
         'phone_number': paymentRequest.phone,
@@ -43,12 +43,14 @@ class NequiPay extends PaymentProcessor {
 
     final response = await HttpClientAdapter.post(
         url: urlCompleta, headers: headers, body: body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaPago =
-          RespuestaPagoNequi.fromJson(json.decode(response.body));
-      return respuestaPago;
-    } else {
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
+    final respuestaPago =
+        NequiPaymentResponse.fromJson(json.decode(response.body));
+
+    return respuestaPago;
   }
 }

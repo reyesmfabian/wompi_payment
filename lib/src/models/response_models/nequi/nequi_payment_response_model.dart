@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-RespuestaPagoTarjeta respuestaPagoTarjetaFromJson(String str) =>
-    RespuestaPagoTarjeta.fromJson(json.decode(str));
+NequiPaymentResponse nequiPaymentResponseFromJson(String str) =>
+    NequiPaymentResponse.fromJson(json.decode(str));
 
-String respuestaPagoTarjetaToJson(RespuestaPagoTarjeta data) =>
+String nequiPaymentResponseToJson(NequiPaymentResponse data) =>
     json.encode(data.toJson());
 
-class RespuestaPagoTarjeta {
-  RespuestaPagoTarjeta({
+class NequiPaymentResponse {
+  NequiPaymentResponse({
     required this.data,
     required this.meta,
   });
 
-  RespuestaTarjetaData data;
-  RespuestaTarjetaMeta meta;
+  NequiResponseData data;
+  NequiResponseMeta meta;
 
-  factory RespuestaPagoTarjeta.fromJson(Map<String, dynamic> json) =>
-      RespuestaPagoTarjeta(
-        data: RespuestaTarjetaData.fromJson(json["data"]),
-        meta: RespuestaTarjetaMeta.fromJson(json["meta"]),
+  factory NequiPaymentResponse.fromJson(Map<String, dynamic> json) =>
+      NequiPaymentResponse(
+        data: NequiResponseData.fromJson(json["data"]),
+        meta: NequiResponseMeta.fromJson(json["meta"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +27,8 @@ class RespuestaPagoTarjeta {
       };
 }
 
-class RespuestaTarjetaData {
-  RespuestaTarjetaData({
+class NequiResponseData {
+  NequiResponseData({
     required this.id,
     required this.createdAt,
     required this.finalizedAt,
@@ -58,7 +58,7 @@ class RespuestaTarjetaData {
   String customerEmail;
   String currency;
   String paymentMethodType;
-  RespuestaTarjetaPaymentMethod paymentMethod;
+  NequiResponsePaymentMethod paymentMethod;
   String status;
   dynamic statusMessage;
   dynamic billingData;
@@ -66,12 +66,12 @@ class RespuestaTarjetaData {
   dynamic redirectUrl;
   dynamic paymentSourceId;
   dynamic paymentLinkId;
-  RespuestaTarjetaCustomerData customerData;
+  NequiResponseCustomerData customerData;
   dynamic billId;
   List<dynamic> taxes;
 
-  factory RespuestaTarjetaData.fromJson(Map<String, dynamic> json) =>
-      RespuestaTarjetaData(
+  factory NequiResponseData.fromJson(Map<String, dynamic> json) =>
+      NequiResponseData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         finalizedAt: json["finalized_at"],
@@ -81,7 +81,7 @@ class RespuestaTarjetaData {
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
         paymentMethod:
-            RespuestaTarjetaPaymentMethod.fromJson(json["payment_method"]),
+            NequiResponsePaymentMethod.fromJson(json["payment_method"]),
         status: json["status"],
         statusMessage: json["status_message"],
         billingData: json["billing_data"],
@@ -89,8 +89,7 @@ class RespuestaTarjetaData {
         redirectUrl: json["redirect_url"],
         paymentSourceId: json["payment_source_id"],
         paymentLinkId: json["payment_link_id"],
-        customerData:
-            RespuestaTarjetaCustomerData.fromJson(json["customer_data"]),
+        customerData: NequiResponseCustomerData.fromJson(json["customer_data"]),
         billId: json["bill_id"],
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
       );
@@ -118,8 +117,8 @@ class RespuestaTarjetaData {
       };
 }
 
-class RespuestaTarjetaCustomerData {
-  RespuestaTarjetaCustomerData({
+class NequiResponseCustomerData {
+  NequiResponseCustomerData({
     required this.fullName,
     required this.phoneNumber,
   });
@@ -127,8 +126,8 @@ class RespuestaTarjetaCustomerData {
   String fullName;
   String phoneNumber;
 
-  factory RespuestaTarjetaCustomerData.fromJson(Map<String, dynamic> json) =>
-      RespuestaTarjetaCustomerData(
+  factory NequiResponseCustomerData.fromJson(Map<String, dynamic> json) =>
+      NequiResponseCustomerData(
         fullName: json["full_name"],
         phoneNumber: json["phone_number"],
       );
@@ -139,81 +138,36 @@ class RespuestaTarjetaCustomerData {
       };
 }
 
-class RespuestaTarjetaPaymentMethod {
-  RespuestaTarjetaPaymentMethod({
+class NequiResponsePaymentMethod {
+  NequiResponsePaymentMethod({
     required this.type,
-    required this.extra,
-    required this.installments,
+    required this.phoneNumber,
   });
 
   String type;
-  RespuestaTarjetaExtra extra;
-  int installments;
+  String phoneNumber;
 
-  factory RespuestaTarjetaPaymentMethod.fromJson(Map<String, dynamic> json) =>
-      RespuestaTarjetaPaymentMethod(
+  factory NequiResponsePaymentMethod.fromJson(Map<String, dynamic> json) =>
+      NequiResponsePaymentMethod(
         type: json["type"],
-        extra: RespuestaTarjetaExtra.fromJson(json["extra"]),
-        installments: json["installments"],
+        phoneNumber: json["phone_number"],
       );
 
   Map<String, dynamic> toJson() => {
         "type": type,
-        "extra": extra.toJson(),
-        "installments": installments,
+        "phone_number": phoneNumber,
       };
 }
 
-class RespuestaTarjetaExtra {
-  RespuestaTarjetaExtra({
-    required this.bin,
-    required this.name,
-    required this.brand,
-    required this.expYear,
-    required this.expMonth,
-    required this.lastFour,
-    required this.cardHolder,
-  });
-
-  String bin;
-  String name;
-  String brand;
-  String expYear;
-  String expMonth;
-  String lastFour;
-  String cardHolder;
-
-  factory RespuestaTarjetaExtra.fromJson(Map<String, dynamic> json) =>
-      RespuestaTarjetaExtra(
-        bin: json["bin"],
-        name: json["name"],
-        brand: json["brand"],
-        expYear: json["exp_year"],
-        expMonth: json["exp_month"],
-        lastFour: json["last_four"],
-        cardHolder: json["card_holder"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "bin": bin,
-        "name": name,
-        "brand": brand,
-        "exp_year": expYear,
-        "exp_month": expMonth,
-        "last_four": lastFour,
-        "card_holder": cardHolder,
-      };
-}
-
-class RespuestaTarjetaMeta {
-  RespuestaTarjetaMeta({
+class NequiResponseMeta {
+  NequiResponseMeta({
     required this.traceId,
   });
 
   String traceId;
 
-  factory RespuestaTarjetaMeta.fromJson(Map<String, dynamic> json) =>
-      RespuestaTarjetaMeta(
+  factory NequiResponseMeta.fromJson(Map<String, dynamic> json) =>
+      NequiResponseMeta(
         traceId: json["trace_id"],
       );
 
