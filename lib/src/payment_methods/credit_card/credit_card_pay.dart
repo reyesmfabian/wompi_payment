@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-/// **_PAGAR POR MEDIO DE TARJETA DE CRÉDITO_**
+/// **_PAY BY CREDIT CARD_**
 ///
 class CreditCardPay extends PaymentProcessor {
   final CreditCard creditCard;
@@ -31,7 +31,7 @@ class CreditCardPay extends PaymentProcessor {
       'card_holder': creditCard.cardHolder
     };
 
-    // TOKENIZAR TARJETA DE CRÉDITO
+    // CREDIT CARD TOKENIZATION
     var response = await HttpClientAdapter.post(
         url: finalUrl, headers: headers, body: body);
 
@@ -43,7 +43,7 @@ class CreditCardPay extends PaymentProcessor {
 
     final cardToken = tokenizedCard.data.id;
 
-    // GENERAR PAGO
+    // GENERATE PAYMENT
     finalUrl = "$url/v1/transactions/";
 
     headers = {

@@ -12,11 +12,6 @@ class PseCheck extends PaymentChecker {
     String url = wompiClient.wompiUrl;
     String finalUrl = "$url/v1/transactions/$transactionId";
 
-    // Map<String, String> headers = {
-    //   "Content-type": "application/json",
-    //   'Authorization': 'Bearer' + wompiClient.publicKey
-    // };
-
     final response = await HttpClientAdapter.get(url: finalUrl);
 
     if (response.statusCode != 200 && response.statusCode != 201) {

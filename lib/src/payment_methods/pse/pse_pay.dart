@@ -15,7 +15,7 @@ class PsePay extends PaymentProcessor {
   @override
   Future<PsePaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
-    // GENERAR PAGO
+    // GENERATE PAYMENT
     String finalUrl = "$url/v1/transactions/";
 
     Map<String, String> headers = {

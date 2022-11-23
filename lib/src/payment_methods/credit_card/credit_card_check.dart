@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-/// Comprueba el estado del pago con tarjeta de crédito
+/// Check credit card payment status
 ///
 /// Args:
 ///
-/// **transactionId (String):** El id de la transacción.
+/// **transactionId (String):** The transaction id.
 ///
-/// **wompiClient (WompiClient):** La instancia de WompiClient.
+/// **wompiClient (WompiClient):** The WompiClient instance.
 ///
 class CreditCardCheck extends PaymentChecker {
   CreditCardCheck(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
+/// Checks the status of a transaction and returns a NequiCheckModel object.
 class NequiCheck extends PaymentChecker {
   NequiCheck({required String transactionId, required WompiClient wompiClient})
       : super(transactionId: transactionId, wompiClient: wompiClient);

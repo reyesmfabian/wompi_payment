@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final consultaTarjeta = consultaTarjetaFromJson(jsonString);
-
 import 'dart:convert';
 
 CardCheckModel cardCheckModelFromJson(String str) =>
