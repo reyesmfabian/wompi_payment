@@ -31,8 +31,12 @@ class CreditCardCheck extends PaymentChecker {
       throw ArgumentError(response.body);
     }
 
+    /// Converting the response body to a CardCheckModel object.
+
     final checkResponse = CardCheckModel.fromJson(json.decode(response.body));
 
+    /// This is a recursive function that checks the status of the transaction every 10 seconds until the
+    /// transaction is approved or rejected.
     if (checkResponse.data.status == 'PENDING') {
       await Future.delayed(const Duration(seconds: 10));
       return checkPayment();

@@ -4,6 +4,7 @@ import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 /// **_PAY BY CREDIT CARD_**
 ///
+/// It creates a credit card token, then uses that token to create a payment
 class CreditCardPay extends PaymentProcessor {
   final CreditCard creditCard;
 
@@ -39,6 +40,7 @@ class CreditCardPay extends PaymentProcessor {
       throw ArgumentError(response.body);
     }
 
+    /// Converting the response body to a TokenizedCard object.
     final tokenizedCard = TokenizedCard.fromJson(json.decode(response.body));
 
     final cardToken = tokenizedCard.data.id;
@@ -69,6 +71,7 @@ class CreditCardPay extends PaymentProcessor {
       }
     };
 
+    /// A wrapper for the http package.
     response = await HttpClientAdapter.post(
         url: finalUrl, headers: headers, body: body);
 
@@ -76,6 +79,7 @@ class CreditCardPay extends PaymentProcessor {
       throw ArgumentError(response.body);
     }
 
+    /// Converting the response body to a CardPaymentResponse object.
     final paymentResponse =
         CardPaymentResponse.fromJson(json.decode(response.body));
 

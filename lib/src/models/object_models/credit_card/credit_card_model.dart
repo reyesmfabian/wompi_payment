@@ -27,6 +27,10 @@ class CreditCard {
   int quotas;
   String cardHolder;
 
+  /// It creates a CreditCard object from a json object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The json object that contains the credit card information.
   factory CreditCard.fromJson(Map<String, dynamic> json) => CreditCard(
         cardNumber: json["card_number"],
         cvcCode: json["cvc_code"],
@@ -37,6 +41,7 @@ class CreditCard {
         cardHolder: json["card_holder"],
       );
 
+  /// It takes the values of the variables in the class and puts them in a map
   Map<String, dynamic> toJson() => {
         "card_number": cardNumber,
         "cvc_code": cvcCode,
