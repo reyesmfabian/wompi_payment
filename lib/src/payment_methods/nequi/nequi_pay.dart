@@ -15,7 +15,7 @@ class NequiPay extends PaymentProcessor {
   @override
   Future<NequiPaymentResponse> pay() async {
     if (phoneNumberToPay.length != 10) {
-      throw ArgumentError('El numero de teléfono debe tener 10 dígitos');
+      throw ArgumentError('The telephone number must be 10 digits long.');
     }
 
     String url = wompiClient.wompiUrl;

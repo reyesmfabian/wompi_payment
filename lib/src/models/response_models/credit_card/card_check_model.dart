@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final consultaTarjeta = consultaTarjetaFromJson(jsonString);
-
 import 'dart:convert';
 
 CardCheckModel cardCheckModelFromJson(String str) =>
@@ -9,6 +5,7 @@ CardCheckModel cardCheckModelFromJson(String str) =>
 
 String cardCheckModelToJson(CardCheckModel data) => json.encode(data.toJson());
 
+/// A model class for the CardCheck API response.
 class CardCheckModel {
   CardCheckModel({
     required this.data,
@@ -29,6 +26,7 @@ class CardCheckModel {
       };
 }
 
+/// A Dart class that is used to parse the JSON response from the API.
 class CardData {
   CardData({
     required this.id,
@@ -58,6 +56,10 @@ class CardData {
   CardMerchant merchant;
   List<dynamic> taxes;
 
+  /// A factory constructor that takes in a json object and returns a CardData object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a CardData object.
   factory CardData.fromJson(Map<String, dynamic> json) => CardData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -72,6 +74,8 @@ class CardData {
         merchant: CardMerchant.fromJson(json["merchant"]),
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
       );
+
+  /// It converts the object into a JSON object
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -89,6 +93,7 @@ class CardData {
       };
 }
 
+/// A Dart class that represents a CardMerchant object.
 class CardMerchant {
   CardMerchant({
     required this.name,
@@ -110,6 +115,10 @@ class CardMerchant {
   String email;
   String legalId;
 
+  /// A factory constructor that creates a CardMerchant object from a json string.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that contains the data to be parsed.
   factory CardMerchant.fromJson(Map<String, dynamic> json) => CardMerchant(
         name: json["name"],
         legalName: json["legal_name"],
@@ -121,6 +130,7 @@ class CardMerchant {
         legalId: json["legal_id"],
       );
 
+  /// It converts the object to a map.
   Map<String, dynamic> toJson() => {
         "name": name,
         "legal_name": legalName,
@@ -133,6 +143,7 @@ class CardMerchant {
       };
 }
 
+/// A Dart class that is used to create a CardPaymentMethod object.
 class CardPaymentMethod {
   CardPaymentMethod({
     required this.type,
@@ -144,6 +155,10 @@ class CardPaymentMethod {
   CardExtra extra;
   int installments;
 
+  /// It creates a CardPaymentMethod object from a json object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
   factory CardPaymentMethod.fromJson(Map<String, dynamic> json) =>
       CardPaymentMethod(
         type: json["type"],
@@ -151,6 +166,7 @@ class CardPaymentMethod {
         installments: json["installments"],
       );
 
+  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra.toJson(),
@@ -158,6 +174,7 @@ class CardPaymentMethod {
       };
 }
 
+/// `CardExtra` is a class that represents the extra information about a card
 class CardExtra {
   CardExtra({
     required this.name,
@@ -173,6 +190,10 @@ class CardExtra {
   String externalIdentifier;
   String processorResponseCode;
 
+  /// A factory constructor that takes in a json object and returns a CardExtra object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that contains the data for the card.
   factory CardExtra.fromJson(Map<String, dynamic> json) => CardExtra(
         name: json["name"],
         brand: json["brand"],
@@ -181,6 +202,7 @@ class CardExtra {
         processorResponseCode: json["processor_response_code"] ?? "",
       );
 
+  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
         "name": name,
         "brand": brand,
@@ -190,6 +212,7 @@ class CardExtra {
       };
 }
 
+/// A Dart class that is used to parse the JSON response from the API.
 class CardMeta {
   CardMeta({
     required this.traceId,

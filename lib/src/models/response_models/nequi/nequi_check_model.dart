@@ -10,6 +10,8 @@ NequiCheckModel nequiCheckModelFromJson(String str) =>
 String nequiCheckModelToJson(NequiCheckModel data) =>
     json.encode(data.toJson());
 
+/// A model class that is used to parse the json response from the API.
+
 class NequiCheckModel {
   NequiCheckModel({
     required this.data,
@@ -31,6 +33,7 @@ class NequiCheckModel {
       };
 }
 
+/// A class that represents the data that is returned from the Nequi API.
 class NequiData {
   NequiData({
     required this.id,
@@ -91,6 +94,7 @@ class NequiData {
       };
 }
 
+/// It's a Dart class that represents a Nequi merchant
 class NequiMerchant {
   NequiMerchant({
     required this.name,
@@ -135,6 +139,7 @@ class NequiMerchant {
       };
 }
 
+/// It converts the object to a json object
 class NequiPaymentMethod {
   NequiPaymentMethod({
     required this.type,
@@ -146,6 +151,10 @@ class NequiPaymentMethod {
   NequiExtra extra;
   String phoneNumber;
 
+  /// It converts the object to a json object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The json object to be converted.
   factory NequiPaymentMethod.fromJson(Map<String, dynamic> json) =>
       NequiPaymentMethod(
         type: json["type"] ?? "",
@@ -158,6 +167,7 @@ class NequiPaymentMethod {
         phoneNumber: json["phone_number"],
       );
 
+  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra.toJson(),
@@ -165,6 +175,7 @@ class NequiPaymentMethod {
       };
 }
 
+/// It converts the JSON object to a Dart object.
 class NequiExtra {
   NequiExtra({
     required this.transactionId,
@@ -174,17 +185,23 @@ class NequiExtra {
   String transactionId;
   String externalIdentifier;
 
+  /// A factory constructor that creates a new NequiExtra object from a map.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a NequiExtra object.
   factory NequiExtra.fromJson(Map<String, dynamic> json) => NequiExtra(
         transactionId: json["transaction_id"],
         externalIdentifier: json["external_identifier"],
       );
 
+  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
         "transaction_id": transactionId,
         "external_identifier": externalIdentifier,
       };
 }
 
+/// A class that represents the metadata of a Nequi API call.
 class NequiMeta {
   NequiMeta({
     required this.traceId,
@@ -192,6 +209,10 @@ class NequiMeta {
 
   String traceId;
 
+  /// It creates a NequiMeta object from a json string.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
   factory NequiMeta.fromJson(Map<String, dynamic> json) => NequiMeta(
         traceId: json["trace_id"],
       );

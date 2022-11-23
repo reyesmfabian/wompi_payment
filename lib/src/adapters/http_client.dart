@@ -34,6 +34,7 @@ abstract class HttpClientAdapter {
       {required String url,
       Map<String, String>? headers,
       Map<String, dynamic>? body}) async {
+    /// Making a POST request to the given URL with the given headers and body.
     return http.post(Uri.parse(url), headers: headers, body: json.encode(body));
   }
 }

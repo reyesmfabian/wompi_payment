@@ -6,6 +6,7 @@ PsePaymentResponse psePaymentResponseFromJson(String str) =>
 String psePaymentResponseToJson(PsePaymentResponse data) =>
     json.encode(data.toJson());
 
+/// A class that is used to parse the response from the API.
 class PsePaymentResponse {
   PsePaymentResponse({
     required this.data,
@@ -15,18 +16,24 @@ class PsePaymentResponse {
   PsePaymentResponseData data;
   PsePaymentResponseMeta meta;
 
+  /// It creates a PsePaymentResponse object from a json string.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON response from the API.
   factory PsePaymentResponse.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponse(
         data: PsePaymentResponseData.fromJson(json["data"]),
         meta: PsePaymentResponseMeta.fromJson(json["meta"]),
       );
 
+  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "data": data.toJson(),
         "meta": meta.toJson(),
       };
 }
 
+/// A class that represents the response of a payment request.
 class PsePaymentResponseData {
   PsePaymentResponseData({
     required this.id,
@@ -56,6 +63,10 @@ class PsePaymentResponseData {
   PsePaymentResponseMerchant merchant;
   List<dynamic> taxes;
 
+  /// It takes a JSON object and returns a Dart object
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON response from the API.
   factory PsePaymentResponseData.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseData(
           id: json["id"],
@@ -72,6 +83,7 @@ class PsePaymentResponseData {
           merchant: PsePaymentResponseMerchant.fromJson(json["merchant"] ?? {}),
           taxes: List<dynamic>.from(json["taxes"].map((x) => x)));
 
+  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "id": id,
         "created_at": createdAt.toIso8601String(),
@@ -88,6 +100,7 @@ class PsePaymentResponseData {
       };
 }
 
+/// A class that represents the merchant object in the response.
 class PsePaymentResponseMerchant {
   PsePaymentResponseMerchant({
     required this.name,
@@ -109,6 +122,11 @@ class PsePaymentResponseMerchant {
   String email;
   String legalId;
 
+  /// It takes a Map<String, dynamic> and returns a PsePaymentResponseMerchant
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that contains the data to be parsed.
+
   factory PsePaymentResponseMerchant.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseMerchant(
         name: json["name"] ?? "",
@@ -121,6 +139,7 @@ class PsePaymentResponseMerchant {
         legalId: json["legal_id"] ?? "",
       );
 
+  /// It converts the object to a map.
   Map<String, dynamic> toJson() => {
         "name": name,
         "legal_name": legalName,
@@ -133,6 +152,7 @@ class PsePaymentResponseMerchant {
       };
 }
 
+/// A class that represents the response of a payment method.
 class PsePaymentResponsePaymentMethod {
   PsePaymentResponsePaymentMethod({
     required this.type,
@@ -152,6 +172,10 @@ class PsePaymentResponsePaymentMethod {
   String paymentDescription;
   String financialInstitutionCode;
 
+  /// A factory constructor that creates a new PsePaymentResponsePaymentMethod object from a Map object.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that contains the data to be parsed.
   factory PsePaymentResponsePaymentMethod.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponsePaymentMethod(
         type: json["type"],
@@ -165,6 +189,7 @@ class PsePaymentResponsePaymentMethod {
         financialInstitutionCode: json["financial_institution_code"],
       );
 
+  /// It converts the object into a map
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra?.toJson(),
@@ -175,6 +200,8 @@ class PsePaymentResponsePaymentMethod {
         "financial_institution_code": financialInstitutionCode,
       };
 }
+
+/// A class that represents the extra information that is returned by the PSE payment gateway.
 
 class PsePaymentResponseExtra {
   PsePaymentResponseExtra({
@@ -199,6 +226,10 @@ class PsePaymentResponseExtra {
   String externalIdentifier;
   DateTime bankProcessingDate;
 
+  /// It takes a JSON object and returns a PsePaymentResponseExtra object
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The json object returned by the API.
   factory PsePaymentResponseExtra.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseExtra(
           ticketId: json["ticket_id"] ?? "",
@@ -213,6 +244,7 @@ class PsePaymentResponseExtra {
           bankProcessingDate: DateTime.parse(
               json["bank_processing_date"] ?? DateTime.now().toString()));
 
+  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "ticket_id": ticketId,
         "return_code": returnCode,
@@ -228,6 +260,7 @@ class PsePaymentResponseExtra {
       };
 }
 
+/// A class that is used to parse the response from the API.
 class PsePaymentResponseMeta {
   PsePaymentResponseMeta({
     required this.traceId,
@@ -235,11 +268,16 @@ class PsePaymentResponseMeta {
 
   String traceId;
 
+  /// It creates a PsePaymentResponseMeta object from a json string.
+  ///
+  /// Args:
+  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a Dart object.
   factory PsePaymentResponseMeta.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseMeta(
         traceId: json["trace_id"],
       );
 
+  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
         "trace_id": traceId,
       };

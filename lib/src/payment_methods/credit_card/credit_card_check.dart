@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-/// Comprueba el estado del pago con tarjeta de crédito
+/// Check credit card payment status
 ///
 /// Args:
 ///
-/// **transactionId (String):** El id de la transacción.
+/// **transactionId (String):** The transaction id.
 ///
-/// **wompiClient (WompiClient):** La instancia de WompiClient.
+/// **wompiClient (WompiClient):** The WompiClient instance.
 ///
 class CreditCardCheck extends PaymentChecker {
   CreditCardCheck(
@@ -31,8 +31,12 @@ class CreditCardCheck extends PaymentChecker {
       throw ArgumentError(response.body);
     }
 
+    /// Converting the response body to a CardCheckModel object.
+
     final checkResponse = CardCheckModel.fromJson(json.decode(response.body));
 
+    /// This is a recursive function that checks the status of the transaction every 10 seconds until the
+    /// transaction is approved or rejected.
     if (checkResponse.data.status == 'PENDING') {
       await Future.delayed(const Duration(seconds: 10));
       return checkPayment();
