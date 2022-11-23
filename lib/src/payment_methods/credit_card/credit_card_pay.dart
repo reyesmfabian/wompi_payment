@@ -16,7 +16,7 @@ class CreditCardPay extends PaymentProcessor {
   @override
   Future<CardPaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
-    String urlCompleta = "$url/v1/tokens/cards";
+    String finalUrl = "$url/v1/tokens/cards";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -33,18 +33,18 @@ class CreditCardPay extends PaymentProcessor {
 
     // TOKENIZAR TARJETA DE CRÉDITO
     var response = await HttpClientAdapter.post(
-        url: urlCompleta, headers: headers, body: body);
+        url: finalUrl, headers: headers, body: body);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
 
-    final tarjeta = TokenizedCard.fromJson(json.decode(response.body));
+    final tokenizedCard = TokenizedCard.fromJson(json.decode(response.body));
 
-    final tokenTarjeta = tarjeta.data.id;
+    final cardToken = tokenizedCard.data.id;
 
     // GENERAR PAGO
-    urlCompleta = "$url/v1/transactions/";
+    finalUrl = "$url/v1/transactions/";
 
     headers = {
       "Content-type": "application/json",
@@ -61,7 +61,7 @@ class CreditCardPay extends PaymentProcessor {
       'payment_method': {
         'type': 'CARD',
         'installments': creditCard.quotas,
-        'token': tokenTarjeta
+        'token': cardToken
       },
       'customer_data': {
         'phone_number': paymentRequest.phone,
@@ -70,15 +70,15 @@ class CreditCardPay extends PaymentProcessor {
     };
 
     response = await HttpClientAdapter.post(
-        url: urlCompleta, headers: headers, body: body);
+        url: finalUrl, headers: headers, body: body);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
 
-    final respuestaPago =
+    final paymentResponse =
         CardPaymentResponse.fromJson(json.decode(response.body));
 
-    return respuestaPago;
+    return paymentResponse;
   }
 }

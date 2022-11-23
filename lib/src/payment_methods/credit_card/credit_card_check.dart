@@ -23,22 +23,21 @@ class CreditCardCheck extends PaymentChecker {
   @override
   Future<CardCheckModel> checkPayment() async {
     String url = wompiClient.wompiUrl;
-    String urlCompleta = "$url/v1/transactions/$transactionId";
+    String finalUrl = "$url/v1/transactions/$transactionId";
 
-    final response = await HttpClientAdapter.get(url: urlCompleta);
+    final response = await HttpClientAdapter.get(url: finalUrl);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
 
-    final respuestaConsulta =
-        CardCheckModel.fromJson(json.decode(response.body));
+    final checkResponse = CardCheckModel.fromJson(json.decode(response.body));
 
-    if (respuestaConsulta.data.status == 'PENDING') {
+    if (checkResponse.data.status == 'PENDING') {
       await Future.delayed(const Duration(seconds: 10));
       return checkPayment();
     }
 
-    return respuestaConsulta;
+    return checkResponse;
   }
 }

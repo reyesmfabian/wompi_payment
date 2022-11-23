@@ -21,11 +21,11 @@ class WompiService {
   static Future<AcceptanceResponse> getAcceptance(
       {required WompiClient wompiClient}) async {
     String _url = wompiClient.wompiUrl;
-    String urlCompleta = '$_url/v1/merchants/' + wompiClient.publicKey;
+    String finalUrl = '$_url/v1/merchants/' + wompiClient.publicKey;
     Map<String, String> headers = {"Content-type": "application/json"};
 
     final response =
-        await HttpClientAdapter.get(url: urlCompleta, headers: headers);
+        await HttpClientAdapter.get(url: finalUrl, headers: headers);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
@@ -40,7 +40,7 @@ class WompiService {
   /// Retrieve the list of Banks for PSE payments.
   static Future<List<Bank>> getBanks({required WompiClient wompiClient}) async {
     String _url = wompiClient.wompiUrl;
-    String urlCompleta = '$_url/v1/pse/financial_institutions';
+    String finalUrl = '$_url/v1/pse/financial_institutions';
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -48,7 +48,7 @@ class WompiService {
     };
 
     final response =
-        await HttpClientAdapter.get(url: urlCompleta, headers: headers);
+        await HttpClientAdapter.get(url: finalUrl, headers: headers);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);

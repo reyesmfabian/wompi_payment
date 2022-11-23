@@ -16,7 +16,7 @@ class PsePay extends PaymentProcessor {
   Future<PsePaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
     // GENERAR PAGO
-    String urlCompleta = "$url/v1/transactions/";
+    String finalUrl = "$url/v1/transactions/";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -45,16 +45,16 @@ class PsePay extends PaymentProcessor {
     };
 
     final response = await HttpClientAdapter.post(
-        url: urlCompleta, headers: headers, body: body);
+        url: finalUrl, headers: headers, body: body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final respuestaPago =
+      final paymentResponse =
           PsePaymentResponse.fromJson(json.decode(response.body));
 
-      final respuestaPse =
-          await _checkPaymentUrl(transactionId: respuestaPago.data.id);
+      final pseResponse =
+          await _checkPaymentUrl(transactionId: paymentResponse.data.id);
 
-      return respuestaPse;
+      return pseResponse;
     } else {
       throw ArgumentError(response.body);
     }
@@ -63,26 +63,26 @@ class PsePay extends PaymentProcessor {
   Future<PsePaymentResponse> _checkPaymentUrl(
       {required String transactionId}) async {
     String url = wompiClient.wompiUrl;
-    String urlCompleta = "$url/v1/transactions/$transactionId";
+    String finalUrl = "$url/v1/transactions/$transactionId";
 
-    final response = await HttpClientAdapter.get(url: urlCompleta);
+    final response = await HttpClientAdapter.get(url: finalUrl);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
 
-    final respuestaConsulta =
+    final checkResponse =
         PsePaymentResponse.fromJson(json.decode(response.body));
 
-    if (respuestaConsulta.data.status == "ERROR") {
-      throw ArgumentError(respuestaConsulta.data.statusMessage);
+    if (checkResponse.data.status == "ERROR") {
+      throw ArgumentError(checkResponse.data.statusMessage);
     }
 
-    if (respuestaConsulta.data.paymentMethod.extra == null) {
+    if (checkResponse.data.paymentMethod.extra == null) {
       await Future.delayed(const Duration(seconds: 3));
       return _checkPaymentUrl(transactionId: transactionId);
     }
 
-    return respuestaConsulta;
+    return checkResponse;
   }
 }

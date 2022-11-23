@@ -20,7 +20,7 @@ class NequiPay extends PaymentProcessor {
 
     String url = wompiClient.wompiUrl;
     // GENERAR PAGO
-    String urlCompleta = "$url/v1/transactions/";
+    String finalUrl = "$url/v1/transactions/";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
@@ -42,15 +42,15 @@ class NequiPay extends PaymentProcessor {
     };
 
     final response = await HttpClientAdapter.post(
-        url: urlCompleta, headers: headers, body: body);
+        url: finalUrl, headers: headers, body: body);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
 
-    final respuestaPago =
+    final paymentResponse =
         NequiPaymentResponse.fromJson(json.decode(response.body));
 
-    return respuestaPago;
+    return paymentResponse;
   }
 }

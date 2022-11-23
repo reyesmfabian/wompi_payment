@@ -2,6 +2,7 @@ name: wompi_payment_colombia
 description: Paquete para realizar pagos electrónicos usando la API del servicio de Wompi de Bancolombia.
 version: 1.0.0
 homepage: https://smart-dev.com.co
+repository: https://github.com/reyesmfabian/wompi_payment
 
 environment:
   sdk: ">=2.16.2 <3.0.0"

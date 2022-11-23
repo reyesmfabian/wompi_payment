@@ -10,20 +10,20 @@ class PseCheck extends PaymentChecker {
   @override
   Future<PsePaymentResponse> checkPayment() async {
     String url = wompiClient.wompiUrl;
-    String urlCompleta = "$url/v1/transactions/$transactionId";
+    String finalUrl = "$url/v1/transactions/$transactionId";
 
     // Map<String, String> headers = {
     //   "Content-type": "application/json",
     //   'Authorization': 'Bearer' + wompiClient.publicKey
     // };
 
-    final response = await HttpClientAdapter.get(url: urlCompleta);
+    final response = await HttpClientAdapter.get(url: finalUrl);
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
-    final respuestaConsulta =
+    final checkResponse =
         PsePaymentResponse.fromJson(json.decode(response.body));
-    return respuestaConsulta;
+    return checkResponse;
   }
 }
