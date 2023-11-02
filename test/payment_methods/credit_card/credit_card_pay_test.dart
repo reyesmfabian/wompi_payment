@@ -1,39 +1,39 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-import 'credit_card_pay_test.mocks.dart';
+class MockCreditCardPay extends Mock implements CreditCardPay {}
 
-@GenerateMocks([CreditCardPay, CardPaymentResponse])
+class MockCardPaymentResponse extends Mock implements CardPaymentResponse {}
+
 void main() {
+  MockCreditCardPay creditCardPay = MockCreditCardPay();
+  MockCardPaymentResponse _cardPaymentResponse = MockCardPaymentResponse();
   group('CreditCardPay Tests', () {
-    MockCreditCardPay _creditCardPay = MockCreditCardPay();
-    MockCardPaymentResponse _cardPaymentResponse = MockCardPaymentResponse();
     test('CreditCardPay Test Types', () async {
-      expect(_creditCardPay, isA<CreditCardPay>());
+      expect(creditCardPay, isA<CreditCardPay>());
     });
     test('CreditCardPay Test', () async {
-      when(_creditCardPay.pay()).thenAnswer((_) async {
+      when(() => creditCardPay.pay()).thenAnswer((_) async {
         return _cardPaymentResponse;
       });
 
       /// ACT
-      final _result = await WompiService.pay(paymentProcessor: _creditCardPay);
+      final _result = await WompiService.pay(paymentProcessor: creditCardPay);
 
       /// ASSERT
-      verify(_creditCardPay.pay());
+      verify(() => creditCardPay.pay());
       expect(_result, equals(_cardPaymentResponse));
     });
 
     test('Credit Card Pay throws ArgumentError', () {
-      when(_creditCardPay.pay()).thenAnswer((_) {
+      when(() => creditCardPay.pay()).thenAnswer((_) {
         throw ArgumentError();
       });
-      final _result = WompiService.pay(paymentProcessor: _creditCardPay);
+      final _result = WompiService.pay(paymentProcessor: creditCardPay);
 
       /// ASSERT
-      verify(_creditCardPay.pay());
+      verify(() => creditCardPay.pay());
       expect(_result, throwsArgumentError);
     });
   });

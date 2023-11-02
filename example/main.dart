@@ -60,8 +60,11 @@ void main() async {
 
   /// Check the response of the payment.
   final CardCheckModel cardCheck = await WompiService.checkPayment(
-      paymentChecker: CreditCardCheck(
-          transactionId: cardPayment.data.id, wompiClient: wompiClient));
+    paymentChecker: CreditCardCheck(
+      transactionId: cardPayment.data.id,
+      wompiClient: wompiClient,
+    ),
+  );
 
   print(cardCheck.data.status);
 
@@ -80,8 +83,11 @@ void main() async {
 
   // Check the response of the payment.
   final NequiCheckModel nequiCheck = await WompiService.checkPayment(
-      paymentChecker: NequiCheck(
-          transactionId: nequiPayment.data.id, wompiClient: wompiClient));
+    paymentChecker: NequiCheck(
+      transactionId: nequiPayment.data.id,
+      wompiClient: wompiClient,
+    ),
+  );
   print(nequiCheck.data.status);
 
   /// *------------------ # MAKE A PSE PAYMENT ------------------ *
@@ -117,8 +123,11 @@ void main() async {
 
 // Then you need to check the PSE payment status.
   final PsePaymentResponse response = await WompiService.checkPayment(
-      paymentChecker:
-          PseCheck(transactionId: payment.data.id, wompiClient: wompiClient));
+    paymentChecker: PseCheck(
+      transactionId: payment.data.id,
+      wompiClient: wompiClient,
+    ),
+  );
 
   print(response.data.status);
 }

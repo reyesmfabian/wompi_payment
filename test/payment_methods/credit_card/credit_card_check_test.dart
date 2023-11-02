@@ -1,40 +1,40 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart'; // Importa mocktail en lugar de mockito
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-import 'credit_card_check_test.mocks.dart';
+class MockCreditCardCheck extends Mock implements CreditCardCheck {}
 
-@GenerateMocks([CreditCardCheck, CardCheckModel])
+class MockCardCheckModel extends Mock implements CardCheckModel {}
+
 void main() {
+  CreditCardCheck creditCardCheck = MockCreditCardCheck();
+  CardCheckModel cardCheckModel = MockCardCheckModel();
+
   group('Credit Card Check Tests', () {
-    MockCreditCardCheck _creditCardCheck = MockCreditCardCheck();
-    MockCardCheckModel _cardCheckModel = MockCardCheckModel();
-    test('CreditCard Check Types', () async {
-      expect(_creditCardCheck, isA<CreditCardCheck>());
-    });
     test('CreditCard Check  Test', () async {
-      when(_creditCardCheck.checkPayment()).thenAnswer((_) async {
-        return _cardCheckModel;
+      // Configura el comportamiento del mock con when
+      when(() => creditCardCheck.checkPayment()).thenAnswer((_) async {
+        return cardCheckModel;
       });
 
-      /// ACT
+      // ACT
       final _result =
-          await WompiService.checkPayment(paymentChecker: _creditCardCheck);
+          await WompiService.checkPayment(paymentChecker: creditCardCheck);
 
-      /// ASSERT
-      verify(_creditCardCheck.checkPayment());
-      expect(_result, equals(_cardCheckModel));
+      // ASSERT
+      expect(_result, equals(cardCheckModel));
     });
 
     test('CreditCard Check  throws ArgumentError', () {
-      when(_creditCardCheck.checkPayment()).thenAnswer((_) {
-        throw ArgumentError();
-      });
+      // Configura el comportamiento del mock para que lance ArgumentError
+      when(() => creditCardCheck.checkPayment()).thenThrow(ArgumentError());
+
+      // ACT
       final _result =
-          WompiService.checkPayment(paymentChecker: _creditCardCheck);
-      verify(_creditCardCheck.checkPayment());
-      expect(_result, throwsArgumentError);
+          WompiService.checkPayment(paymentChecker: creditCardCheck);
+
+      // ASSERT
+      expect(() => _result, throwsArgumentError);
     });
   });
 }

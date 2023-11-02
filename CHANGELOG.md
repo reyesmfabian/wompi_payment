@@ -1,2 +1,9 @@
-#### [1.0.0] - Initial release
-#### [1.0.1] - Fix: Documentation
+## [1.1.0] - Update Dependencies - (2023-11-01)
+
+* Update dart sdk version
+* Update dependencies version
+* Change mock dependencie
+
+## [1.0.1] - Fix: Documentation
+
+## [1.0.0] - Initial release

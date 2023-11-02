@@ -1,10 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-import 'wompi_acceptance_token_test.mocks.dart';
+class MockAcceptanceResponse extends Mock implements AcceptanceResponse {}
 
-@GenerateMocks([AcceptanceResponse])
 void main() {
   group('Wompi Service Tests', () {
     final _acceptanceResponse = MockAcceptanceResponse();

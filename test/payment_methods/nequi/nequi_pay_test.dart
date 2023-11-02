@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
-import 'nequi_pay_test.mocks.dart';
+class MockNequiPay extends Mock implements NequiPay {}
 
-@GenerateMocks([NequiPay, NequiPaymentResponse])
+class MockNequiPaymentResponse extends Mock implements NequiPaymentResponse {}
+
 void main() {
   group('NequiPay Tests', () {
     MockNequiPay _nequiPay = MockNequiPay();
@@ -14,7 +14,7 @@ void main() {
       expect(_nequiPay, isA<NequiPay>());
     });
     test('NequiPay Test', () async {
-      when(_nequiPay.pay()).thenAnswer((_) async {
+      when(() => _nequiPay.pay()).thenAnswer((_) async {
         return _nequiPaymentResponse;
       });
 
@@ -22,18 +22,18 @@ void main() {
       final _result = await WompiService.pay(paymentProcessor: _nequiPay);
 
       /// ASSERT
-      verify(_nequiPay.pay());
+      verify(() => _nequiPay.pay());
       expect(_result, equals(_nequiPaymentResponse));
     });
 
     test('Nequi Pay throws ArgumentError', () {
-      when(_nequiPay.pay()).thenAnswer((_) {
+      when(() => _nequiPay.pay()).thenAnswer((_) {
         throw ArgumentError();
       });
       final _result = WompiService.pay(paymentProcessor: _nequiPay);
 
       /// ASSERT
-      verify(_nequiPay.pay());
+      verify(() => _nequiPay.pay());
       expect(_result, throwsArgumentError);
     });
   });
