@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 void main() async {
@@ -16,6 +17,7 @@ void main() async {
   final acceptance = await WompiService.getAcceptance(wompiClient: wompiClient);
 
   /// Get the link to the PDF file with the terms. The user must be explicitly accepted the terms and conditions of the payment.
+  // ignore: unused_local_variable
   final pdfTermsLink = acceptance.data.presignedAcceptance.permalink;
 
   /// Get the token from the server and use it to make the payment.
@@ -66,7 +68,9 @@ void main() async {
     ),
   );
 
-  print(cardCheck.data.status);
+  if (kDebugMode) {
+    print(cardCheck.data.status);
+  }
 
   /// *------------------ # MAKE A NEQUI PAYMENT ------------------ *
   ///
@@ -88,7 +92,9 @@ void main() async {
       wompiClient: wompiClient,
     ),
   );
-  print(nequiCheck.data.status);
+  if (kDebugMode) {
+    print(nequiCheck.data.status);
+  }
 
   /// *------------------ # MAKE A PSE PAYMENT ------------------ *
   ///
@@ -119,6 +125,7 @@ void main() async {
       await WompiService.pay(paymentProcessor: psePay);
 
 // You need to redirect the user to the URL provided by the Wompi Service.
+  // ignore: unused_local_variable
   final paymentURL = payment.data.paymentMethod.extra!.asyncPaymentUrl;
 
 // Then you need to check the PSE payment status.
@@ -129,5 +136,7 @@ void main() async {
     ),
   );
 
-  print(response.data.status);
+  if (kDebugMode) {
+    print(response.data.status);
+  }
 }
