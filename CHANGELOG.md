@@ -1,4 +1,10 @@
-## [1.1.0] - Update Dependencies - (2023-11-01)
+## [1.1.1] 
+
+###### Enable Actions - (2023-11-01)
+
+## [1.1.0] 
+
+###### Update Dependencies - (2023-11-01)
 
 * Update dart sdk version
 * Update dependencies version
