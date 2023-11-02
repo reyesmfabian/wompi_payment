@@ -1,7 +1,7 @@
 name: wompi_payment_colombia
 description: Package to make electronic payments using the API of Bancolombia's
   Wompi service.
-version: 1.1.1
+version: 1.1.2
 homepage: https://smart-dev.com.co
 repository: https://github.com/reyesmfabian/wompi_payment
 
