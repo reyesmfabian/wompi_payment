@@ -1,3 +1,7 @@
+## [2.0.0]
+
+###### [Breaking] Fix mapper bug - (2023-12-06)
+
 ## [1.1.5]
 
 ###### Enable Actions - (2023-11-01)

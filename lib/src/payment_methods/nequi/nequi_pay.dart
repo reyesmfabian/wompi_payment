@@ -20,11 +20,11 @@ class NequiPay extends PaymentProcessor {
 
     String url = wompiClient.wompiUrl;
     // GENERAR PAGO
-    String finalUrl = "$url/v1/transactions/";
+    String finalUrl = "$url/transactions/";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.publicKey
+      'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
 
     Map<String, dynamic> body = {

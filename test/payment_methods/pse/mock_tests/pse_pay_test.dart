@@ -9,43 +9,43 @@ class MockPsePaymentResponse extends Mock implements PsePaymentResponse {}
 void main() {
   group('PsePay Tests', () {
     test('PsePay Test Types', () async {
-      final _psePay = MockPsePay();
-      expect(_psePay, isA<PsePay>());
+      final psePay0 = MockPsePay();
+      expect(psePay0, isA<PsePay>());
     });
 
     test('PsePay Test', () async {
-      final _psePay = MockPsePay();
-      final _psePaymentResponse = MockPsePaymentResponse();
+      final psePay1 = MockPsePay();
+      final psePaymentResponse = MockPsePaymentResponse();
 
       // Configura el comportamiento del mock con when
-      when(() => _psePay.pay()).thenAnswer((_) async {
-        return _psePaymentResponse;
+      when(() => psePay1.pay()).thenAnswer((_) async {
+        return psePaymentResponse;
       });
 
       // ACT
-      final _result = await WompiService.pay(paymentProcessor: _psePay);
+      final result0 = await WompiService.pay(paymentProcessor: psePay1);
 
       // ASSERT
       verify(
-        () => _psePay.pay(),
+        () => psePay1.pay(),
       ); // Verifica que se haya llamado al método "pay" en _psePay
-      expect(_result, equals(_psePaymentResponse));
+      expect(result0, equals(psePaymentResponse));
     });
 
     test('PsePay throws ArgumentError', () {
-      final _psePay = MockPsePay();
+      final psePay = MockPsePay();
 
       // Configura el comportamiento del mock para que lance ArgumentError
-      when(() => _psePay.pay()).thenThrow(ArgumentError());
+      when(() => psePay.pay()).thenThrow(ArgumentError());
 
       // ACT
-      final _result = WompiService.pay(paymentProcessor: _psePay);
+      final result = WompiService.pay(paymentProcessor: psePay);
 
       // ASSERT
       verify(
-        () => _psePay.pay(),
+        () => psePay.pay(),
       ); // Verifica que se haya llamado al método "pay" en _psePay
-      expect(() => _result, throwsArgumentError);
+      expect(() => result, throwsArgumentError);
     });
   });
 }

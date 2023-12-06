@@ -10,7 +10,7 @@ class NequiCheck extends PaymentChecker {
   @override
   Future<NequiCheckModel> checkPayment() async {
     String url = wompiClient.wompiUrl;
-    String finalUrl = "$url/v1/transactions/$transactionId";
+    String finalUrl = "$url/transactions/$transactionId";
 
     final response = await HttpClientAdapter.get(url: finalUrl);
 

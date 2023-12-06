@@ -262,23 +262,10 @@ class PsePaymentResponseExtra {
 
 /// A class that is used to parse the response from the API.
 class PsePaymentResponseMeta {
-  PsePaymentResponseMeta({
-    required this.traceId,
-  });
+  PsePaymentResponseMeta();
 
-  String traceId;
-
-  /// It creates a PsePaymentResponseMeta object from a json string.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a Dart object.
   factory PsePaymentResponseMeta.fromJson(Map<String, dynamic> json) =>
-      PsePaymentResponseMeta(
-        traceId: json["trace_id"],
-      );
+      PsePaymentResponseMeta();
 
-  /// It converts the object to a JSON object.
-  Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
-      };
+  Map<String, dynamic> toJson() => {};
 }

@@ -58,22 +58,9 @@ class Bank {
 
 /// A class that is used to parse the JSON response from the API.
 class Meta {
-  Meta({
-    required this.traceId,
-  });
+  Meta();
 
-  String traceId;
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta();
 
-  /// It creates a Meta object from a json string.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a Meta object.
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        traceId: json["trace_id"],
-      );
-
-  /// It converts the object to a JSON object.
-  Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
-      };
+  Map<String, dynamic> toJson() => {};
 }

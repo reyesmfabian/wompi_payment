@@ -13,15 +13,17 @@ and the Flutter guide for
 
 # Wompi Payment SDK - Colombia
 
+## Disclaimer
+
+This is an unofficial implementation of the Wompi API, we are not responsible for bugs derived from its use. For additional information you can refer to the official Wompi documentation. [https://docs.wompi.co/](https://docs.wompi.co/)
+
 ## Features
 
-[x] Credit Card Payments 
+[x] Credit Card Payments
 [x] Nequi Payments
 [x] PSE Payments
 
 ## Usage
-
-
 
 ```dart
 import 'package:wompi_payment_colombia/src/src_exports.dart';
@@ -149,3 +151,7 @@ void main() async {
   print(response.data.status);
 }
 ```
+
+## Testing
+
+We have added an E2E tests section for verification of the services using the test sandbox. You can run them manually by cloning this repository, and checking in the tests/payment_methods/PAYMENT-METHOD/service_tests folder by modifying the related information in the TestUtils class.

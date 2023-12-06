@@ -22,11 +22,11 @@ class WompiClient {
   String currency;
 
   /// The Wompi Sandbox URL.
-  static String sandBoxUrl = "https://sandbox.wompi.co";
+  static String sandBoxUrl = "https://sandbox.wompi.co/v1";
 
   /// The Wompi Production URL.
   ///
-  static String productionUrl = "https://production.wompi.co";
+  static String productionUrl = "https://production.wompi.co/v1";
 
   WompiClient(
       {required this.publicKey,

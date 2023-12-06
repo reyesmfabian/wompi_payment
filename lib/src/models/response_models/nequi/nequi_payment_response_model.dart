@@ -6,20 +6,15 @@ NequiPaymentResponse nequiPaymentResponseFromJson(String str) =>
 String nequiPaymentResponseToJson(NequiPaymentResponse data) =>
     json.encode(data.toJson());
 
-/// A class that represents the response from the Nequi API.
 class NequiPaymentResponse {
+  final NequiResponseData data;
+  final NequiResponseMeta meta;
+
   NequiPaymentResponse({
     required this.data,
     required this.meta,
   });
 
-  NequiResponseData data;
-  NequiResponseMeta meta;
-
-  /// It creates a NequiPaymentResponse object from a json object.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The json response from the server.
   factory NequiPaymentResponse.fromJson(Map<String, dynamic> json) =>
       NequiPaymentResponse(
         data: NequiResponseData.fromJson(json["data"]),
@@ -32,8 +27,28 @@ class NequiPaymentResponse {
       };
 }
 
-/// A class that contains the data that is returned from the API.
 class NequiResponseData {
+  final String id;
+  final DateTime createdAt;
+  final dynamic finalizedAt;
+  final int amountInCents;
+  final String reference;
+  final String customerEmail;
+  final String currency;
+  final String paymentMethodType;
+  final PaymentMethod paymentMethod;
+  final String status;
+  final dynamic statusMessage;
+  final dynamic billingData;
+  final dynamic shippingAddress;
+  final dynamic redirectUrl;
+  final dynamic paymentSourceId;
+  final dynamic paymentLinkId;
+  final CustomerData customerData;
+  final dynamic billId;
+  final List<dynamic> taxes;
+  final dynamic tipInCents;
+
   NequiResponseData({
     required this.id,
     required this.createdAt,
@@ -54,32 +69,9 @@ class NequiResponseData {
     required this.customerData,
     required this.billId,
     required this.taxes,
+    required this.tipInCents,
   });
 
-  String id;
-  DateTime createdAt;
-  dynamic finalizedAt;
-  int amountInCents;
-  String reference;
-  String customerEmail;
-  String currency;
-  String paymentMethodType;
-  NequiResponsePaymentMethod paymentMethod;
-  String status;
-  dynamic statusMessage;
-  dynamic billingData;
-  dynamic shippingAddress;
-  dynamic redirectUrl;
-  dynamic paymentSourceId;
-  dynamic paymentLinkId;
-  NequiResponseCustomerData customerData;
-  dynamic billId;
-  List<dynamic> taxes;
-
-  /// A factory constructor that creates a NequiResponseData object from a json object.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON response from the API.
   factory NequiResponseData.fromJson(Map<String, dynamic> json) =>
       NequiResponseData(
         id: json["id"],
@@ -90,8 +82,7 @@ class NequiResponseData {
         customerEmail: json["customer_email"],
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
-        paymentMethod:
-            NequiResponsePaymentMethod.fromJson(json["payment_method"]),
+        paymentMethod: PaymentMethod.fromJson(json["payment_method"]),
         status: json["status"],
         statusMessage: json["status_message"],
         billingData: json["billing_data"],
@@ -99,12 +90,11 @@ class NequiResponseData {
         redirectUrl: json["redirect_url"],
         paymentSourceId: json["payment_source_id"],
         paymentLinkId: json["payment_link_id"],
-        customerData: NequiResponseCustomerData.fromJson(json["customer_data"]),
+        customerData: CustomerData.fromJson(json["customer_data"]),
         billId: json["bill_id"],
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
+        tipInCents: json["tip_in_cents"],
       );
-
-  /// It converts the object into a JSON object
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -126,82 +116,75 @@ class NequiResponseData {
         "customer_data": customerData.toJson(),
         "bill_id": billId,
         "taxes": List<dynamic>.from(taxes.map((x) => x)),
+        "tip_in_cents": tipInCents,
       };
 }
 
-/// A class that represents the response of the Nequi API.
-class NequiResponseCustomerData {
-  NequiResponseCustomerData({
+class CustomerData {
+  final String fullName;
+  final String phoneNumber;
+
+  CustomerData({
     required this.fullName,
     required this.phoneNumber,
   });
 
-  String fullName;
-  String phoneNumber;
-
-  /// It creates a new instance of the NequiResponseCustomerData class from a JSON object.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
-  factory NequiResponseCustomerData.fromJson(Map<String, dynamic> json) =>
-      NequiResponseCustomerData(
+  factory CustomerData.fromJson(Map<String, dynamic> json) => CustomerData(
         fullName: json["full_name"],
         phoneNumber: json["phone_number"],
       );
 
-  /// It converts the object to a map.
   Map<String, dynamic> toJson() => {
         "full_name": fullName,
         "phone_number": phoneNumber,
       };
 }
 
-/// A class that represents the response of the payment method.
-class NequiResponsePaymentMethod {
-  NequiResponsePaymentMethod({
+class PaymentMethod {
+  final String type;
+  final Extra extra;
+  final String phoneNumber;
+
+  PaymentMethod({
     required this.type,
+    required this.extra,
     required this.phoneNumber,
   });
 
-  String type;
-  String phoneNumber;
-
-  /// A factory constructor that creates a new NequiResponsePaymentMethod object from a JSON map.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
-  factory NequiResponsePaymentMethod.fromJson(Map<String, dynamic> json) =>
-      NequiResponsePaymentMethod(
+  factory PaymentMethod.fromJson(Map<String, dynamic> json) => PaymentMethod(
         type: json["type"],
+        extra: Extra.fromJson(json["extra"]),
         phoneNumber: json["phone_number"],
       );
 
-  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
         "type": type,
+        "extra": extra.toJson(),
         "phone_number": phoneNumber,
       };
 }
 
-/// A class that represents the meta data of a response from Nequi.
-class NequiResponseMeta {
-  NequiResponseMeta({
-    required this.traceId,
+class Extra {
+  final bool isThreeDs;
+
+  Extra({
+    required this.isThreeDs,
   });
 
-  String traceId;
-
-  /// It creates a NequiResponseMeta object from a json object.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
-  factory NequiResponseMeta.fromJson(Map<String, dynamic> json) =>
-      NequiResponseMeta(
-        traceId: json["trace_id"],
+  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+        isThreeDs: json["is_three_ds"],
       );
 
-  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
+        "is_three_ds": isThreeDs,
       };
+}
+
+class NequiResponseMeta {
+  NequiResponseMeta();
+
+  factory NequiResponseMeta.fromJson(Map<String, dynamic> json) =>
+      NequiResponseMeta();
+
+  Map<String, dynamic> toJson() => {};
 }

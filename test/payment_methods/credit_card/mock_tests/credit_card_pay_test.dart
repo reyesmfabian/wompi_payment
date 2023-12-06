@@ -8,33 +8,33 @@ class MockCardPaymentResponse extends Mock implements CardPaymentResponse {}
 
 void main() {
   MockCreditCardPay creditCardPay = MockCreditCardPay();
-  MockCardPaymentResponse _cardPaymentResponse = MockCardPaymentResponse();
+  MockCardPaymentResponse cardPaymentResponse = MockCardPaymentResponse();
   group('CreditCardPay Tests', () {
     test('CreditCardPay Test Types', () async {
       expect(creditCardPay, isA<CreditCardPay>());
     });
     test('CreditCardPay Test', () async {
       when(() => creditCardPay.pay()).thenAnswer((_) async {
-        return _cardPaymentResponse;
+        return cardPaymentResponse;
       });
 
       /// ACT
-      final _result = await WompiService.pay(paymentProcessor: creditCardPay);
+      final result = await WompiService.pay(paymentProcessor: creditCardPay);
 
       /// ASSERT
       verify(() => creditCardPay.pay());
-      expect(_result, equals(_cardPaymentResponse));
+      expect(result, equals(cardPaymentResponse));
     });
 
     test('Credit Card Pay throws ArgumentError', () {
       when(() => creditCardPay.pay()).thenAnswer((_) {
         throw ArgumentError();
       });
-      final _result = WompiService.pay(paymentProcessor: creditCardPay);
+      final result0 = WompiService.pay(paymentProcessor: creditCardPay);
 
       /// ASSERT
       verify(() => creditCardPay.pay());
-      expect(_result, throwsArgumentError);
+      expect(result0, throwsArgumentError);
     });
   });
 }

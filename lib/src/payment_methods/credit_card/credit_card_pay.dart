@@ -17,11 +17,11 @@ class CreditCardPay extends PaymentProcessor {
   @override
   Future<CardPaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
-    String finalUrl = "$url/v1/tokens/cards";
+    String finalUrl = "$url/tokens/cards";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.publicKey
+      'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
 
     Map<String, dynamic> body = {
@@ -46,11 +46,11 @@ class CreditCardPay extends PaymentProcessor {
     final cardToken = tokenizedCard.data.id;
 
     // GENERATE PAYMENT
-    finalUrl = "$url/v1/transactions/";
+    finalUrl = "$url/transactions/";
 
     headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.publicKey
+      'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
 
     body = {

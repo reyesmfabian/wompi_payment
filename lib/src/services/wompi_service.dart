@@ -20,8 +20,8 @@ class WompiService {
   ///  AcceptResponse.
   static Future<AcceptanceResponse> getAcceptance(
       {required WompiClient wompiClient}) async {
-    String _url = wompiClient.wompiUrl;
-    String finalUrl = '$_url/v1/merchants/' + wompiClient.publicKey;
+    String url = wompiClient.wompiUrl;
+    String finalUrl = '$url/merchants/${wompiClient.publicKey}';
     Map<String, String> headers = {"Content-type": "application/json"};
 
     final response =
@@ -39,12 +39,12 @@ class WompiService {
 
   /// Retrieve the list of Banks for PSE payments.
   static Future<List<Bank>> getBanks({required WompiClient wompiClient}) async {
-    String _url = wompiClient.wompiUrl;
-    String finalUrl = '$_url/v1/pse/financial_institutions';
+    String url = wompiClient.wompiUrl;
+    String finalUrl = '$url/pse/financial_institutions';
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      "Authorization": "Bearer " + wompiClient.publicKey
+      "Authorization": "Bearer ${wompiClient.publicKey}"
     };
 
     final response =

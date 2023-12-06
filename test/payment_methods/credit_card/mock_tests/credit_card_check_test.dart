@@ -18,11 +18,11 @@ void main() {
       });
 
       // ACT
-      final _result =
+      final result =
           await WompiService.checkPayment(paymentChecker: creditCardCheck);
 
       // ASSERT
-      expect(_result, equals(cardCheckModel));
+      expect(result, equals(cardCheckModel));
     });
 
     test('CreditCard Check  throws ArgumentError', () {
@@ -30,11 +30,11 @@ void main() {
       when(() => creditCardCheck.checkPayment()).thenThrow(ArgumentError());
 
       // ACT
-      final _result =
+      final result0 =
           WompiService.checkPayment(paymentChecker: creditCardCheck);
 
       // ASSERT
-      expect(() => _result, throwsArgumentError);
+      expect(() => result0, throwsArgumentError);
     });
   });
 }

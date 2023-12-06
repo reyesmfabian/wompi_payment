@@ -16,11 +16,11 @@ class PsePay extends PaymentProcessor {
   Future<PsePaymentResponse> pay() async {
     String url = wompiClient.wompiUrl;
     // GENERATE PAYMENT
-    String finalUrl = "$url/v1/transactions/";
+    String finalUrl = "$url/transactions/";
 
     Map<String, String> headers = {
       "Content-type": "application/json",
-      'Authorization': 'Bearer ' + wompiClient.publicKey
+      'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
 
     Map<String, dynamic> body = {
@@ -63,7 +63,7 @@ class PsePay extends PaymentProcessor {
   Future<PsePaymentResponse> _checkPaymentUrl(
       {required String transactionId}) async {
     String url = wompiClient.wompiUrl;
-    String finalUrl = "$url/v1/transactions/$transactionId";
+    String finalUrl = "$url/transactions/$transactionId";
 
     final response = await HttpClientAdapter.get(url: finalUrl);
 

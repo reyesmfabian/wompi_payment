@@ -205,18 +205,10 @@ class CardResponseExtra {
 }
 
 class CardResponseMeta {
-  CardResponseMeta({
-    required this.traceId,
-  });
-
-  String traceId;
+  CardResponseMeta();
 
   factory CardResponseMeta.fromJson(Map<String, dynamic> json) =>
-      CardResponseMeta(
-        traceId: json["trace_id"],
-      );
+      CardResponseMeta();
 
-  Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
-      };
+  Map<String, dynamic> toJson() => {};
 }

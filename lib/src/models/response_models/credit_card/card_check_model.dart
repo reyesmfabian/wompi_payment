@@ -214,17 +214,9 @@ class CardExtra {
 
 /// A Dart class that is used to parse the JSON response from the API.
 class CardMeta {
-  CardMeta({
-    required this.traceId,
-  });
+  CardMeta();
 
-  String traceId;
+  factory CardMeta.fromJson(Map<String, dynamic> json) => CardMeta();
 
-  factory CardMeta.fromJson(Map<String, dynamic> json) => CardMeta(
-        traceId: json["trace_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
-      };
+  Map<String, dynamic> toJson() => {};
 }

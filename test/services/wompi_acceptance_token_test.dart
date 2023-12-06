@@ -6,9 +6,9 @@ class MockAcceptanceResponse extends Mock implements AcceptanceResponse {}
 
 void main() {
   group('Wompi Service Tests', () {
-    final _acceptanceResponse = MockAcceptanceResponse();
+    final acceptanceResponse = MockAcceptanceResponse();
     test('Test Acceptance Model Type', () async {
-      expect(_acceptanceResponse, isA<AcceptanceResponse>());
+      expect(acceptanceResponse, isA<AcceptanceResponse>());
     });
   });
 }

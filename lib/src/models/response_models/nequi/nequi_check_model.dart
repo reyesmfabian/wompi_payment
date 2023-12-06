@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final NequiCheckModel = NequiCheckModelFromJson(jsonString);
-
 import 'dart:convert';
 
 NequiCheckModel nequiCheckModelFromJson(String str) =>
@@ -10,16 +6,14 @@ NequiCheckModel nequiCheckModelFromJson(String str) =>
 String nequiCheckModelToJson(NequiCheckModel data) =>
     json.encode(data.toJson());
 
-/// A model class that is used to parse the json response from the API.
-
 class NequiCheckModel {
+  final NequiData data;
+  final NequiMeta meta;
+
   NequiCheckModel({
     required this.data,
     required this.meta,
   });
-
-  NequiData data;
-  NequiMeta meta;
 
   factory NequiCheckModel.fromJson(Map<String, dynamic> json) =>
       NequiCheckModel(
@@ -33,70 +27,92 @@ class NequiCheckModel {
       };
 }
 
-/// A class that represents the data that is returned from the Nequi API.
 class NequiData {
+  final String id;
+  final DateTime createdAt;
+  final DateTime finalizedAt;
+  final int amountInCents;
+  final String reference;
+  final String currency;
+  final String paymentMethodType;
+  final NequiPaymentMethod paymentMethod;
+  final dynamic paymentLinkId;
+  final dynamic redirectUrl;
+  final String status;
+  final dynamic statusMessage;
+  final Merchant merchant;
+  final List<dynamic> taxes;
+  final dynamic tipInCents;
+
   NequiData({
     required this.id,
     required this.createdAt,
+    required this.finalizedAt,
     required this.amountInCents,
     required this.reference,
     required this.currency,
     required this.paymentMethodType,
     required this.paymentMethod,
+    required this.paymentLinkId,
     required this.redirectUrl,
     required this.status,
     required this.statusMessage,
     required this.merchant,
     required this.taxes,
+    required this.tipInCents,
   });
-
-  String id;
-  DateTime createdAt;
-  int amountInCents;
-  String reference;
-  String currency;
-  String paymentMethodType;
-  NequiPaymentMethod paymentMethod;
-  dynamic redirectUrl;
-  String status;
-  dynamic statusMessage;
-  NequiMerchant merchant;
-  List<dynamic> taxes;
 
   factory NequiData.fromJson(Map<String, dynamic> json) => NequiData(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
+        finalizedAt: DateTime.parse(json["finalized_at"]),
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         currency: json["currency"],
         paymentMethodType: json["payment_method_type"],
         paymentMethod: NequiPaymentMethod.fromJson(json["payment_method"]),
+        paymentLinkId: json["payment_link_id"],
         redirectUrl: json["redirect_url"],
         status: json["status"],
         statusMessage: json["status_message"],
-        merchant: NequiMerchant.fromJson(json["merchant"]),
+        merchant: Merchant.fromJson(json["merchant"]),
         taxes: List<dynamic>.from(json["taxes"].map((x) => x)),
+        tipInCents: json["tip_in_cents"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "created_at": createdAt.toIso8601String(),
+        "finalized_at": finalizedAt.toIso8601String(),
         "amount_in_cents": amountInCents,
         "reference": reference,
         "currency": currency,
         "payment_method_type": paymentMethodType,
         "payment_method": paymentMethod.toJson(),
+        "payment_link_id": paymentLinkId,
         "redirect_url": redirectUrl,
         "status": status,
         "status_message": statusMessage,
         "merchant": merchant.toJson(),
         "taxes": List<dynamic>.from(taxes.map((x) => x)),
+        "tip_in_cents": tipInCents,
       };
 }
 
-/// It's a Dart class that represents a Nequi merchant
-class NequiMerchant {
-  NequiMerchant({
+class Merchant {
+  final int id;
+  final String name;
+  final String legalName;
+  final String contactName;
+  final String phoneNumber;
+  final dynamic logoUrl;
+  final String legalIdType;
+  final String email;
+  final String legalId;
+  final String publicKey;
+
+  Merchant({
+    required this.id,
     required this.name,
     required this.legalName,
     required this.contactName,
@@ -105,29 +121,24 @@ class NequiMerchant {
     required this.legalIdType,
     required this.email,
     required this.legalId,
+    required this.publicKey,
   });
 
-  String name;
-  String legalName;
-  String contactName;
-  String phoneNumber;
-  String logoUrl;
-  String legalIdType;
-  String email;
-  String legalId;
-
-  factory NequiMerchant.fromJson(Map<String, dynamic> json) => NequiMerchant(
+  factory Merchant.fromJson(Map<String, dynamic> json) => Merchant(
+        id: json["id"],
         name: json["name"],
         legalName: json["legal_name"],
         contactName: json["contact_name"],
         phoneNumber: json["phone_number"],
-        logoUrl: json["logo_url"] ?? "",
-        legalIdType: json["legal_id_type"] ?? "",
-        email: json["email"] ?? "",
-        legalId: json["legal_id"] ?? "",
+        logoUrl: json["logo_url"],
+        legalIdType: json["legal_id_type"],
+        email: json["email"],
+        legalId: json["legal_id"],
+        publicKey: json["public_key"],
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "legal_name": legalName,
         "contact_name": contactName,
@@ -136,38 +147,28 @@ class NequiMerchant {
         "legal_id_type": legalIdType,
         "email": email,
         "legal_id": legalId,
+        "public_key": publicKey,
       };
 }
 
-/// It converts the object to a json object
 class NequiPaymentMethod {
+  final String type;
+  final NequiExtra extra;
+  final String phoneNumber;
+
   NequiPaymentMethod({
     required this.type,
     required this.extra,
     required this.phoneNumber,
   });
 
-  String type;
-  NequiExtra extra;
-  String phoneNumber;
-
-  /// It converts the object to a json object.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The json object to be converted.
   factory NequiPaymentMethod.fromJson(Map<String, dynamic> json) =>
       NequiPaymentMethod(
-        type: json["type"] ?? "",
-        extra: NequiExtra.fromJson(json["extra"] ??
-            Map<String, dynamic>.from({
-              "transaction_id": "",
-              "external_identifier": "",
-              "nequi_transaction_id": ""
-            })),
+        type: json["type"],
+        extra: NequiExtra.fromJson(json["extra"]),
         phoneNumber: json["phone_number"],
       );
 
-  /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "type": type,
         "extra": extra.toJson(),
@@ -175,49 +176,34 @@ class NequiPaymentMethod {
       };
 }
 
-/// It converts the JSON object to a Dart object.
 class NequiExtra {
+  final bool isThreeDs;
+  final String transactionId;
+  final String externalIdentifier;
+
   NequiExtra({
+    required this.isThreeDs,
     required this.transactionId,
     required this.externalIdentifier,
   });
 
-  String transactionId;
-  String externalIdentifier;
-
-  /// A factory constructor that creates a new NequiExtra object from a map.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to convert to a NequiExtra object.
   factory NequiExtra.fromJson(Map<String, dynamic> json) => NequiExtra(
+        isThreeDs: json["is_three_ds"],
         transactionId: json["transaction_id"],
         externalIdentifier: json["external_identifier"],
       );
 
-  /// It converts the object to a JSON object.
   Map<String, dynamic> toJson() => {
+        "is_three_ds": isThreeDs,
         "transaction_id": transactionId,
         "external_identifier": externalIdentifier,
       };
 }
 
-/// A class that represents the metadata of a Nequi API call.
 class NequiMeta {
-  NequiMeta({
-    required this.traceId,
-  });
+  NequiMeta();
 
-  String traceId;
+  factory NequiMeta.fromJson(Map<String, dynamic> json) => NequiMeta();
 
-  /// It creates a NequiMeta object from a json string.
-  ///
-  /// Args:
-  ///   json (Map<String, dynamic>): The JSON object that you want to parse.
-  factory NequiMeta.fromJson(Map<String, dynamic> json) => NequiMeta(
-        traceId: json["trace_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "trace_id": traceId,
-      };
+  Map<String, dynamic> toJson() => {};
 }
