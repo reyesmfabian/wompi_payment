@@ -1,3 +1,7 @@
+## [2.0.1]
+
+###### Improve documentation - (2023-12-06)
+
 ## [2.0.0]
 
 ###### [Breaking] Fix mapper bug - (2023-12-06)

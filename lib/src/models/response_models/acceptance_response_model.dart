@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
+/// Converts a JSON string [str] into an [AcceptanceResponse] object.
 AcceptanceResponse acceptanceResponseFromJson(String str) =>
     AcceptanceResponse.fromJson(json.decode(str));
 
+/// Converts an [AcceptanceResponse] object [data] into a JSON string.
 String acceptanceResponseToJson(AcceptanceResponse data) =>
     json.encode(data.toJson());
 
@@ -39,6 +41,9 @@ class Data {
     required this.presignedAcceptance,
   });
 
+  /// In the `Data` class, `PresignedAcceptance presignedAcceptance;` is declaring a variable
+  /// `presignedAcceptance` of type `PresignedAcceptance`. This variable is used to store the parsed data
+  /// from the JSON object.
   PresignedAcceptance presignedAcceptance;
 
   /// It creates a Data object from a json object.

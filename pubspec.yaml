@@ -1,7 +1,7 @@
 name: wompi_payment_colombia
 description: Package to make electronic payments using the API of Bancolombia's
   Wompi service.
-version: 2.0.0
+version: 2.0.1
 homepage: https://smart-dev.com.co
 repository: https://github.com/reyesmfabian/wompi_payment
 
@@ -20,5 +20,3 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
-
-flutter: null

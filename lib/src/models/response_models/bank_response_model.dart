@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+/// Converts a JSON string [str] into a [BankModel] object.
 BankModel bankModelFromJson(String str) => BankModel.fromJson(json.decode(str));
 
+/// Converts a [BankModel] object [data] into a JSON string.
 String bankModelToJson(BankModel data) => json.encode(data.toJson());
 
 /// A model class for the Bank API response.
@@ -30,14 +32,23 @@ class BankModel {
       };
 }
 
-/// A class that represents a bank.
 class Bank {
   Bank({
+    /// The code of the financial institution.
     required this.financialInstitutionCode,
+
+    /// The name of the financial institution.
     required this.financialInstitutionName,
   });
 
+  /// The line `String financialInstitutionCode;` is declaring a variable named `financialInstitutionCode`
+  /// of type `String` in the `Bank` class. This variable is used to store the financial institution code
+  /// of a bank.
   String financialInstitutionCode;
+
+  /// The line `String financialInstitutionName;` is declaring a variable named `financialInstitutionName`
+  /// of type `String` in the `Bank` class. This variable is used to store the financial institution name
+  /// of a bank.
   String financialInstitutionName;
 
   /// A factory constructor that creates a Bank object from a json object.
