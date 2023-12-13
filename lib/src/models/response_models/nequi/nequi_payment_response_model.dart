@@ -29,8 +29,8 @@ class NequiPaymentResponse {
 
 class NequiResponseData {
   final String id;
-  final DateTime createdAt;
-  final dynamic finalizedAt;
+  final Object createdAt;
+  final Object finalizedAt;
   final int amountInCents;
   final String reference;
   final String customerEmail;
@@ -75,8 +75,8 @@ class NequiResponseData {
   factory NequiResponseData.fromJson(Map<String, dynamic> json) =>
       NequiResponseData(
         id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        finalizedAt: json["finalized_at"],
+        createdAt: json["created_at"],
+        finalizedAt: json["finalized_at"] ?? "",
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         customerEmail: json["customer_email"],
@@ -98,7 +98,7 @@ class NequiResponseData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "finalized_at": finalizedAt,
         "amount_in_cents": amountInCents,
         "reference": reference,

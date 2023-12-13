@@ -45,10 +45,6 @@ void main() {
         final PsePaymentResponse payment =
             await WompiService.pay(paymentProcessor: psePay);
 
-        await Future.delayed(
-          const Duration(seconds: 10),
-        );
-
         final PsePaymentResponse psePaymentCheck =
             await WompiService.checkPayment(
           paymentChecker: PseCheck(
@@ -94,10 +90,6 @@ void main() {
 
         final PsePaymentResponse payment =
             await WompiService.pay(paymentProcessor: psePay);
-
-        await Future.delayed(
-          const Duration(seconds: 10),
-        );
 
         final PsePaymentResponse psePaymentCheck =
             await WompiService.checkPayment(

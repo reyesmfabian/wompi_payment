@@ -51,7 +51,7 @@ class PsePaymentResponseData {
   });
 
   String id;
-  DateTime createdAt;
+  Object createdAt;
   int amountInCents;
   String reference;
   String currency;
@@ -70,7 +70,7 @@ class PsePaymentResponseData {
   factory PsePaymentResponseData.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseData(
           id: json["id"],
-          createdAt: DateTime.parse(json["created_at"]),
+          createdAt: json["created_at"],
           amountInCents: json["amount_in_cents"],
           reference: json["reference"],
           currency: json["currency"],
@@ -86,7 +86,7 @@ class PsePaymentResponseData {
   /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "amount_in_cents": amountInCents,
         "reference": reference,
         "currency": currency,
@@ -232,17 +232,18 @@ class PsePaymentResponseExtra {
   ///   json (Map<String, dynamic>): The json object returned by the API.
   factory PsePaymentResponseExtra.fromJson(Map<String, dynamic> json) =>
       PsePaymentResponseExtra(
-          ticketId: json["ticket_id"] ?? "",
-          returnCode: json["return_code"] ?? "",
-          requestDate:
-              DateTime.parse(json["request_date"] ?? DateTime.now().toString()),
-          asyncPaymentUrl: json["async_payment_url"] ?? "",
-          traceabilityCode: json["traceability_code"] ?? "",
-          transactionCycle: json["transaction_cycle"] ?? "",
-          transactionState: json["transaction_state"] ?? "",
-          externalIdentifier: json["external_identifier"] ?? "",
-          bankProcessingDate: DateTime.parse(
-              json["bank_processing_date"] ?? DateTime.now().toString()));
+        ticketId: json["ticket_id"] ?? "",
+        returnCode: json["return_code"] ?? "",
+        requestDate:
+            DateTime.parse(json["request_date"] ?? DateTime.now().toString()),
+        asyncPaymentUrl: json["async_payment_url"] ?? "",
+        traceabilityCode: json["traceability_code"] ?? "",
+        transactionCycle: json["transaction_cycle"] ?? "",
+        transactionState: json["transaction_state"] ?? "",
+        externalIdentifier: json["external_identifier"] ?? "",
+        bankProcessingDate: DateTime.parse(
+            json["bank_processing_date"] ?? DateTime.now().toString()),
+      );
 
   /// It converts the object to a json object.
   Map<String, dynamic> toJson() => {

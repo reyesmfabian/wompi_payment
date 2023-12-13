@@ -42,8 +42,6 @@ void main() {
         final CardPaymentResponse cardPayment =
             await WompiService.pay(paymentProcessor: creditCardPay);
 
-        await Future.delayed(const Duration(seconds: 10));
-
         final CardCheckModel cardCheck = await WompiService.checkPayment(
             paymentChecker: CreditCardCheck(
                 transactionId: cardPayment.data.id,
@@ -85,8 +83,6 @@ void main() {
 
         final CardPaymentResponse cardPayment =
             await WompiService.pay(paymentProcessor: creditCardPay);
-
-        await Future.delayed(const Duration(seconds: 10));
 
         final CardCheckModel cardCheck = await WompiService.checkPayment(
           paymentChecker: CreditCardCheck(

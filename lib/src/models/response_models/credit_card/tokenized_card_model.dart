@@ -40,7 +40,7 @@ class TokenizedCardData {
   });
 
   String id;
-  DateTime createdAt;
+  Object createdAt;
   String brand;
   String name;
   String lastFour;
@@ -53,7 +53,7 @@ class TokenizedCardData {
   factory TokenizedCardData.fromJson(Map<String, dynamic> json) =>
       TokenizedCardData(
         id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"],
         brand: json["brand"],
         name: json["name"],
         lastFour: json["last_four"],
@@ -66,7 +66,7 @@ class TokenizedCardData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "brand": brand,
         "name": name,
         "last_four": lastFour,

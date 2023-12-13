@@ -44,7 +44,7 @@ class CardData {
   });
 
   String id;
-  DateTime createdAt;
+  Object createdAt;
   int amountInCents;
   String reference;
   String currency;
@@ -62,7 +62,7 @@ class CardData {
   ///   json (Map<String, dynamic>): The JSON object that you want to convert to a CardData object.
   factory CardData.fromJson(Map<String, dynamic> json) => CardData(
         id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: json["created_at"],
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         currency: json["currency"],
@@ -79,7 +79,7 @@ class CardData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "amount_in_cents": amountInCents,
         "reference": reference,
         "currency": currency,

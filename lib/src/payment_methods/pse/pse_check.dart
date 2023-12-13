@@ -35,8 +35,15 @@ class PseCheck extends PaymentChecker {
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
+
     final checkResponse =
         PsePaymentResponse.fromJson(json.decode(response.body));
+
+    if (checkResponse.data.status == 'PENDING') {
+      await Future.delayed(const Duration(seconds: 10));
+      return checkPayment();
+    }
+
     return checkResponse;
   }
 }

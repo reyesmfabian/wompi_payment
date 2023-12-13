@@ -29,8 +29,8 @@ class NequiCheckModel {
 
 class NequiData {
   final String id;
-  final DateTime createdAt;
-  final DateTime finalizedAt;
+  final Object createdAt;
+  final Object finalizedAt;
   final int amountInCents;
   final String reference;
   final String currency;
@@ -64,8 +64,8 @@ class NequiData {
 
   factory NequiData.fromJson(Map<String, dynamic> json) => NequiData(
         id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        finalizedAt: DateTime.parse(json["finalized_at"]),
+        createdAt: json["created_at"],
+        finalizedAt: json["finalized_at"] ?? "",
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         currency: json["currency"],
@@ -82,8 +82,8 @@ class NequiData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
-        "finalized_at": finalizedAt.toIso8601String(),
+        "created_at": createdAt,
+        "finalized_at": finalizedAt,
         "amount_in_cents": amountInCents,
         "reference": reference,
         "currency": currency,
@@ -189,8 +189,8 @@ class NequiExtra {
 
   factory NequiExtra.fromJson(Map<String, dynamic> json) => NequiExtra(
         isThreeDs: json["is_three_ds"],
-        transactionId: json["transaction_id"],
-        externalIdentifier: json["external_identifier"],
+        transactionId: json["transaction_id"] ?? "",
+        externalIdentifier: json["external_identifier"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

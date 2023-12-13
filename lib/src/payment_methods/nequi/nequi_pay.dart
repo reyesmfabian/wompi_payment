@@ -47,7 +47,6 @@ class NequiPay extends PaymentProcessor {
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw ArgumentError(response.body);
     }
-
     final paymentResponse =
         NequiPaymentResponse.fromJson(json.decode(response.body));
 

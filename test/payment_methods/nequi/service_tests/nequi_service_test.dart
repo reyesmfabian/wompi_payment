@@ -46,8 +46,6 @@ void main() {
         final NequiPaymentResponse nequiPayment =
             await WompiService.pay(paymentProcessor: nequiPay);
 
-        await Future.delayed(const Duration(seconds: 10));
-
         final NequiCheckModel nequiCheck = await WompiService.checkPayment(
           paymentChecker: NequiCheck(
               transactionId: nequiPayment.data.id,
@@ -79,8 +77,6 @@ void main() {
 
         final NequiPaymentResponse nequiPayment =
             await WompiService.pay(paymentProcessor: nequiPay);
-
-        await Future.delayed(const Duration(seconds: 10));
 
         final NequiCheckModel nequiCheck = await WompiService.checkPayment(
           paymentChecker: NequiCheck(

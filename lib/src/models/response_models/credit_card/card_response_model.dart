@@ -51,8 +51,8 @@ class CardResponseData {
   });
 
   String id;
-  DateTime createdAt;
-  dynamic finalizedAt;
+  Object createdAt;
+  Object finalizedAt;
   int amountInCents;
   String reference;
   String customerEmail;
@@ -73,8 +73,8 @@ class CardResponseData {
   factory CardResponseData.fromJson(Map<String, dynamic> json) =>
       CardResponseData(
         id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        finalizedAt: json["finalized_at"],
+        createdAt: json["created_at"],
+        finalizedAt: json["finalized_at"] ?? "",
         amountInCents: json["amount_in_cents"],
         reference: json["reference"],
         customerEmail: json["customer_email"],
@@ -96,7 +96,7 @@ class CardResponseData {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
         "finalized_at": finalizedAt,
         "amount_in_cents": amountInCents,
         "reference": reference,

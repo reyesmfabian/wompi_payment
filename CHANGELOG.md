@@ -1,3 +1,7 @@
+## [2.1.0]
+
+###### Fixing asynchronous delays and mappers
+
 ## [2.0.1]
 
 ###### Improve documentation - (2023-12-06)

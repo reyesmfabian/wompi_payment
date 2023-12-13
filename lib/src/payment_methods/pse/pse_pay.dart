@@ -78,8 +78,8 @@ class PsePay extends PaymentProcessor {
       throw ArgumentError(checkResponse.data.statusMessage);
     }
 
-    if (checkResponse.data.paymentMethod.extra == null) {
-      await Future.delayed(const Duration(seconds: 3));
+    if (checkResponse.data.paymentMethod.extra!.asyncPaymentUrl.isEmpty) {
+      await Future.delayed(const Duration(seconds: 5));
       return _checkPaymentUrl(transactionId: transactionId);
     }
 
