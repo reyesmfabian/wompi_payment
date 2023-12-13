@@ -1,31 +1,53 @@
+# .github/workflows/publish.yml
 name: Publish to pub.dev
 
 on:
   push:
-    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+    tags:
+      # must align with the tag-pattern configured on pub.dev, often just replace
+      #  with [0-9]+.[0-9]+.[0-9]+*
+      - "v[0-9]+.[0-9]+.[0-9]+*" # tag-pattern on pub.dev: 'v'
+    # If you prefer tags like '1.2.3', without the 'v' prefix, then use:
+    # - '[0-9]+.[0-9]+.[0-9]+*' # tag-pattern on pub.dev: ''
+    # If your repository contains multiple packages consider a pattern like:
+    # - 'my_package_name-v[0-9]+.[0-9]+.[0-9]+*'
 
+# Publish using the reusable workflow from dart-lang.
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        # with:
-        #   flutter-version: '3.3.3'
-      - name: Install dependencies
-        run: flutter pub get
-      - name: Analyze
-        run: flutter analyze
-      - name: Run tests
-        run: flutter test
-      - name: Format code
-        run: dart format --fix .
-      - name: Check Publish Warnings
-        run: dart pub publish --dry-run
-      - name: Publish
-        uses: k-paxian/dart-package-publisher@v1.6
-        with:
-          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          flutter: true
-          skipTests: true
+  publish:
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    # with:
+    #   working-directory: path/to/package/within/repository
+# name: Publish to pub.dev
+
+# on:
+#   push:
+#     tags: ['v[0-9]+.[0-9]+.[0-9]+']
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Install Flutter
+#         uses: subosito/flutter-action@v2
+#         # with:
+#         #   flutter-version: '3.3.3'
+#       - name: Install dependencies
+#         run: flutter pub get
+#       - name: Analyze
+#         run: flutter analyze
+#       - name: Run tests
+#         run: flutter test
+#       - name: Format code
+#         run: dart format --fix .
+#       - name: Check Publish Warnings
+#         run: dart pub publish --dry-run
+#       - name: Publish
+#         uses: k-paxian/dart-package-publisher@v1.6
+#         with:
+#           credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+#           flutter: true
+#           skipTests: true
