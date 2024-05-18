@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
 class NequiPay extends PaymentProcessor {
@@ -27,9 +28,18 @@ class NequiPay extends PaymentProcessor {
       'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
 
+    // Encrypt the signature in SHA-256
+    var bytes = utf8.encode(wompiClient.businessPrefix +
+        paymentRequest.reference +
+        (amount * 100).toString() +
+        wompiClient.currency +
+        wompiClient.integrityKey);
+    var signatureSha256 = sha256.convert(bytes).toString();
+
     Map<String, dynamic> body = {
       'acceptance_token': paymentRequest.acceptanceToken,
       'public_key': wompiClient.publicKey,
+      'signature': signatureSha256, 
       'amount_in_cents': amount * 100,
       'reference': wompiClient.businessPrefix + paymentRequest.reference,
       'customer_email': paymentRequest.email,
