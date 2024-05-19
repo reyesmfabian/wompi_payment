@@ -13,6 +13,7 @@ abstract class TestUtils {
     publicKey: '', // Business Sandbox PublicKey
     environment: Environment.TEST,
     businessPrefix: '', // Business Prefix
-    currency: 'COP',
+    currency: 'COP', 
+    integrityKey: '',// secret integrity key
   );
 }

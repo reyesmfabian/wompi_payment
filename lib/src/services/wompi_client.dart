@@ -8,6 +8,9 @@ enum Environment { TEST, PRODUCTION }
 class WompiClient {
   /// The public key of the merchant used for authentication with the Wompi API.
   late final String publicKey;
+  
+  /// The integrity secret key of the merchant used for generate an integrity signature.
+  late final String integrityKey;
 
   /// The environment of the Wompi API to determine the base URL for API requests.
   late final Environment environment;
@@ -35,6 +38,7 @@ class WompiClient {
     required this.publicKey,
     required this.environment,
     required this.businessPrefix,
+    required this.integrityKey,
     this.currency = 'COP',
   });
 

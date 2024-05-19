@@ -7,7 +7,8 @@ void main() {
       WompiClient wompiClient = WompiClient(
         publicKey: 'testKey',
         environment: Environment.TEST,
-        businessPrefix: 'Pref',
+        businessPrefix: 'Pref', 
+        integrityKey: '',
       );
       expect(wompiClient.publicKey, isA<String>());
       expect(wompiClient.environment, Environment.TEST);
@@ -20,7 +21,8 @@ void main() {
         WompiClient wompiClient = WompiClient(
             publicKey: 'testKey',
             environment: Environment.PRODUCTION,
-            businessPrefix: 'Pref');
+            businessPrefix: 'Pref', 
+            integrityKey: '');
         expect(wompiClient.wompiUrl, 'https://production.wompi.co/v1');
       },
     );
