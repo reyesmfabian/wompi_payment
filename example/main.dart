@@ -10,6 +10,7 @@ void main() async {
         Environment.PRODUCTION, // or Environment.TEST for testing purposes,
     businessPrefix: 'FR-', // Business Prefix
     currency: 'COP', // Currency for the payments
+    integrityKey: '', // Integrity Secret Key
   );
 
   /// First you need to GET the acceptance token from the server, this is the token that will be used to make the payment.
