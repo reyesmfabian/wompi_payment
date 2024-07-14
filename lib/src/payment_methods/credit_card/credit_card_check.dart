@@ -12,9 +12,13 @@ import 'package:wompi_payment_colombia/src/src_exports.dart';
 /// **wompiClient (WompiClient):** The WompiClient instance.
 ///
 class CreditCardCheck extends PaymentChecker {
-  CreditCardCheck(
-      {required String transactionId, required WompiClient wompiClient})
-      : super(transactionId: transactionId, wompiClient: wompiClient);
+  CreditCardCheck({
+    required String transactionId,
+    required WompiClient wompiClient,
+    this.loopUntilStatusChange = true,
+  }) : super(transactionId: transactionId, wompiClient: wompiClient);
+
+  final bool loopUntilStatusChange;
 
   /// Check the status of the transaction.
   ///
@@ -37,7 +41,7 @@ class CreditCardCheck extends PaymentChecker {
 
     /// This is a recursive function that checks the status of the transaction every 10 seconds until the
     /// transaction is approved or rejected.
-    if (checkResponse.data.status == 'PENDING') {
+    if (checkResponse.data.status == 'PENDING' && loopUntilStatusChange) {
       await Future.delayed(const Duration(seconds: 10));
       return checkPayment();
     }

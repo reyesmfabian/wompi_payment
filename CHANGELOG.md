@@ -1,6 +1,6 @@
-## [2.1.2]
+## [3.0.0]
 
-###### Fixing asynchronous delays and mappers
+###### Add new integrity parameter from Wompi Service
 
 ## [2.0.1]
 

@@ -11,8 +11,13 @@ import 'package:wompi_payment_colombia/src/src_exports.dart';
 class PseCheck extends PaymentChecker {
   /// Constructs a [PseCheck] instance requiring a [transactionId]
   /// and a [wompiClient] to communicate with the Wompi API.
-  PseCheck({required String transactionId, required WompiClient wompiClient})
-      : super(transactionId: transactionId, wompiClient: wompiClient);
+  PseCheck({
+    required String transactionId,
+    required WompiClient wompiClient,
+    this.loopUntilStatusChange = true,
+  }) : super(transactionId: transactionId, wompiClient: wompiClient);
+
+  final bool loopUntilStatusChange;
 
   /// Checks the status of a PSE payment transaction.
   ///
@@ -39,7 +44,7 @@ class PseCheck extends PaymentChecker {
     final checkResponse =
         PsePaymentResponse.fromJson(json.decode(response.body));
 
-    if (checkResponse.data.status == 'PENDING') {
+    if (checkResponse.data.status == 'PENDING' && loopUntilStatusChange) {
       await Future.delayed(const Duration(seconds: 10));
       return checkPayment();
     }

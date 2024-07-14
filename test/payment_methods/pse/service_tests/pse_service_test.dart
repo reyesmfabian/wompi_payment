@@ -11,7 +11,8 @@ void main() {
     () {
       test('Test Payment Approved', () async {
         final acceptance = await WompiService.getAcceptance(
-            wompiClient: TestUtils.wompiClient);
+          wompiClient: TestUtils.wompiClient,
+        );
         final acceptanceToken =
             acceptance.data.presignedAcceptance.acceptanceToken;
 

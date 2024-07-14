@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
 import 'package:wompi_payment_colombia/src/src_exports.dart';
 
@@ -22,16 +23,18 @@ class PsePay extends PaymentProcessor {
       "Content-type": "application/json",
       'Authorization': 'Bearer ${wompiClient.publicKey}'
     };
-     // Encrypt the signature in SHA-256
-     var bytes = utf8.encode(wompiClient.businessPrefix +
-        paymentRequest.reference +
-        (pseRequest.amount * 100).toString() +
-        wompiClient.currency +
-        wompiClient.integrityKey);
-    var signatureSha256 = sha256.convert(bytes).toString();
+    // Encrypt the signature in SHA-256
+    final bytes = utf8.encode(
+      wompiClient.businessPrefix +
+          paymentRequest.reference +
+          (pseRequest.amount * 100).toString() +
+          wompiClient.currency +
+          wompiClient.integrityKey,
+    );
+    final signatureSha256 = sha256.convert(bytes).toString();
 
     Map<String, dynamic> body = {
-      'signature': signatureSha256, 
+      'signature': signatureSha256,
       'acceptance_token': paymentRequest.acceptanceToken,
       'public_key': wompiClient.publicKey,
       'amount_in_cents': pseRequest.amount * 100,

@@ -32,10 +32,11 @@ void main() async {
   // *# Create a new instance of the WompiClient*
 
   WompiClient wompiClient = WompiClient(
-    publicKey: 'BusinessPublicKey', // Business Public Key
+    publicKey: 'BusinessPublicKey', // Business Public Key from Wompi Dashboard
     environment:
         Environment.PRODUCTION, // or Environment.TEST for testing purposes,
     businessPrefix: 'FR-', // Business Prefix
+    integrityKey: '', // secret integrity key from Wompi Dashboard
     currency: 'COP', // Currency for the payments
   );
 
